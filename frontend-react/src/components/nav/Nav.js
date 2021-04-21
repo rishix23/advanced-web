@@ -6,25 +6,30 @@ function Nav() {
   return (
     <nav>
       <h3 className='nav-title'>Jobsy</h3>
-      <ul className="nav-links">
-        <Link to='/jobs'>
-          <li>Jobs</li>
-        </Link>
-        <Link to='/createcv'>
-          <li>Create CV</li>
-        </Link>
-        <Link to='/postjob'>
-          <li>Post job</li>
-        </Link>
-        <Link to='/signup'>
-          <li>Sign up</li>
-        </Link>
-        <Link to='/login'>
-          <li>Login</li>
-        </Link>
-        {/*<li>Post Job</li>*/}
-        {/*<li>My Jobs</li>*/}
-      </ul>
+      <div className='wrapper-links-dropdown'>
+        <ul className="nav-links">
+          <Link to='/jobs'>
+            <li>Jobs</li>
+          </Link>
+          <Link to='/createcv'>
+            <li>Create CV</li>
+          </Link>
+        </ul>
+        <div className='dropdown'>
+          <button className='dropbtn'>Employer</button>
+          <div className='dropdown-content'>
+            <Link to='/postjob'>
+              <li>Post job</li>
+            </Link>
+            <Link to='/signup'>
+              <li>Sign up</li>
+            </Link>
+            <Link to='/login'>
+              <li>Login</li>
+            </Link>
+          </div>
+        </div>
+      </div>
     </nav>
   );
 }
