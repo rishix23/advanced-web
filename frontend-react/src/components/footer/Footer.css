@@ -1,0 +1,32 @@
+.footer-title{
+  color: rgb(14, 14, 100);
+}
+
+.footer{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background-color: rgb(231, 230, 230);
+}
+
+.footer-nav-links{
+  display: flex;
+  width: 40%;
+  justify-content: space-around;
+  list-style: none;
+  padding-top: 15px;
+}
+
+.footer-nav-links a{
+  color: rgb(65, 65, 65);
+  text-decoration: none;
+}
+
+.footer-nav-links a:hover{
+  color: rgb(14, 14, 100);
+}
