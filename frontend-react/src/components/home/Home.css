@@ -1,0 +1,74 @@
+.main-home-wrapper{
+  height: 100%;
+}
+
+header{
+  color: white;
+  background-image: url('../../images/homejobsearch.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+  font-weight: normal;
+  text-align: center;
+  z-index: 1;
+  font-size: 40px;
+}
+
+header h2 {
+  text-align: center;
+  z-index: 1;
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+.info-wrapper{
+  padding: 60px 250px;
+  height: 500px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-wrapper p{
+  color: rgb(65, 65, 65);
+}
+
+.info-job-hunter{
+  text-align: center;
+  width: 40%;
+}
+
+.info-job-hunter img{
+  width: 80px;
+  height: 80px;
+  margin: 10px 0px;
+}
+
+.info-employer{
+  text-align: center;
+  width: 40%;
+}
+
+.info-employer img{
+  width: 80px;
+  height: 80px;
+  margin: 10px 0px;
+}
+

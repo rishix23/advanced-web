@@ -3,7 +3,9 @@ import './Createcv.css';
 
 function Createcv() {
   return (
-    <h1>CreateCV</h1>
+    <div className='createcv-main-wrapper'>
+      <h1>Hello</h1>
+    </div>
   );
 }
 
