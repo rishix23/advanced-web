@@ -13,6 +13,9 @@ function Nav() {
         <Link to='/createcv'>
           <li>Create CV</li>
         </Link>
+        <Link to='/postjob'>
+          <li>Post job</li>
+        </Link>
         <Link to='/signup'>
           <li>Sign up</li>
         </Link>

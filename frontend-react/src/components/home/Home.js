@@ -4,11 +4,12 @@ import employeeicon from '../../images/employeeicon.png'
 import jobsearchicon from '../../images/jobsearchicon.png'
 
 function Home() {
+
   return (
     <div className='main-home-wrapper'>
       <header>
         <h1>The process starts with you</h1>
-        <h2><em>Wether you are looking for your dream job or ideal candidate jobsy has you covered</em></h2>
+        <h2><em>Look for your dream job or find your ideal candidate</em></h2>
       </header>
       <div className='info-wrapper'>
         <div className='info-job-hunter'>

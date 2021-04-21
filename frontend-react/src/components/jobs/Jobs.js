@@ -3,7 +3,9 @@ import './Jobs.css'
 
 function Jobs() {
   return (
-    <h1>Jobs</h1>
+    <div>
+      <h1>hi</h1>
+    </div>
   );
 }
 
