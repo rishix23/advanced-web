@@ -8,6 +8,7 @@ import Login from './components/login/Login';
 import Createcv from './components/createcv/Createcv';
 import Footer from './components/footer/Footer';
 import Postjob from './components/postjob/Postjob';
+import Myjobs from './components/myjobs/Myjobs';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import { AuthContext } from './context/auth';
@@ -15,6 +16,7 @@ import { AuthContext } from './context/auth';
 
 function App() {
   const [authTokens, setAuthTokens] = useState();
+
   return (
     <Router>
       <div className="App">
@@ -27,6 +29,7 @@ function App() {
             <Route path="/signup" component={Signup} />
             <Route path="/login" component={Login} />
             <PrivateRoute path="/postjob" component={Postjob} />
+            <PrivateRoute path="/myjobs" component={Myjobs} />
           </Switch>
         </AuthContext.Provider>
         <Footer />

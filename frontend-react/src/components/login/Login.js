@@ -11,7 +11,7 @@ function Login() {
 
   const onSubmit = (data) => {
     console.log(data)
-    setAuthTokens("asdsfdfgghhjjkklkljkhjghfgdfdssa");
+    setAuthTokens(data);
     setLoggedIn(true);
   }
 

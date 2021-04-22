@@ -3,15 +3,11 @@ import './Postjob.css'
 import { useAuth } from "../../context/auth";
 
 function PostJob() {
-  const { setAuthTokens } = useAuth();
+  const { authTokens } = useAuth();
 
-  const logOut = () => {
-    setAuthTokens();
-  }
   return (
     <div>
-      <h1>hi</h1>
-      <button onClick={logOut}>Log out</button>
+      <h1>{JSON.stringify(authTokens, null, 2)}</h1>
     </div>
   );
 }
