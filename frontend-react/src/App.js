@@ -3,6 +3,7 @@ import './App.css';
 import Nav from './components/nav/Nav';
 import Home from './components/home/Home';
 import Jobs from './components/jobs/Jobs';
+import JobsDetail from './components/jobsdetail/JobsDetail'
 import Signup from './components/signup/Signup';
 import Login from './components/login/Login';
 import Createcv from './components/createcv/Createcv';
@@ -24,7 +25,8 @@ function App() {
           <Nav />
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/jobs" component={Jobs} />
+            <Route path="/jobs" exact component={Jobs} />
+            <Route path="/jobs/:id" component={JobsDetail} />
             <Route path="/createcv" component={Createcv} />
             <Route path="/signup" component={Signup} />
             <Route path="/login" component={Login} />
