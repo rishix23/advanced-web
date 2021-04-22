@@ -4,14 +4,7 @@ from docx.shared import Inches
 document = Document()
 
 name = "Rishi Patel"
-
-
-
-
-
-
-
-
+# test
 
 document.add_heading('name', 0)
 
