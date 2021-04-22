@@ -22,7 +22,7 @@ function Nav() {
             <li>Create CV</li>
           </Link>
         </ul>
-        {authTokens && <button onClick={logOut} class='logout-btn'>Logout</button>}
+        {authTokens && <button onClick={logOut} className='logout-btn'>Logout</button>}
         <div className='dropdown'>
           <button className='dropbtn'>Employer</button>
           <div className='dropdown-content'>

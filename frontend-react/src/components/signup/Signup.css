@@ -1,8 +1,9 @@
 .signup-main-wrapper{
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 50px;
 }
 
 .signup-title{
@@ -12,16 +13,11 @@
 }
 
 .signup-wrapper{
-  height: 400px;
+  min-height: 400px;
   width: 40%;
   border: 1px solid rgb(65, 65, 65);
   border-radius: 4px;
   padding: 20px;
-}
-
-.signup-wrapper a {
-  text-align: center;
-  display: block;
 }
 
 input[type=text], input[type=password] {

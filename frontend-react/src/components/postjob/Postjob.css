@@ -1,0 +1,62 @@
+.postjob-main-wrapper{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.postjob-title{
+  font-size: 30px;
+  color: rgb(65, 65, 65);
+  margin: 60px 0px 10px 0px;
+}
+
+.postjob-wrapper{
+  height: 100%;
+  width: 40%;
+  border: 1px solid rgb(65, 65, 65);
+  border-radius: 4px;
+  padding: 20px;
+}
+
+.postjob-wrapper label{
+  padding: 20px;
+  display: inline-block;
+}
+
+input[type=text], input[type=password] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 20px 0px;
+  border: 2px solid rgb(231, 230, 230);;
+  border-radius: 4px;
+}
+
+textarea{
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 20px 0px;
+  border: 2px solid rgb(231, 230, 230);;
+  border-radius: 4px;
+  height: 200px;
+}
+
+input[type=submit]{
+  background-color:  rgb(14, 14, 100);
+  border: 2px solid rgb(231, 230, 230);
+  border-radius: 4px;
+  display: block;
+  margin: 40px auto;
+  padding: 10px;
+  width: 50%;
+  cursor: pointer;
+  color: white;
+}
+
+.postjob-msg{
+  text-align: center;
+  color: goldenrod;
+}
