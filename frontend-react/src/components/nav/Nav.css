@@ -1,6 +1,7 @@
-.nav-title{
+.nav-title a{
   color: rgb(14, 14, 100);
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 nav{

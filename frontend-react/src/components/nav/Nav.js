@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 function Nav() {
   return (
     <nav>
-      <h3 className='nav-title'>Jobsy</h3>
+      <h3 className='nav-title'><Link to='/'>Jobsy</Link></h3>
       <div className='wrapper-links-dropdown'>
         <ul className="nav-links">
           <Link to='/jobs'>
