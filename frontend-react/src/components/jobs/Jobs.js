@@ -43,7 +43,7 @@ function Jobs() {
           <div className='job'>
             <h4 key={job.id} className='job-title'><Link to={`/jobs/${job.id}`}>{job.jobtitle}</Link></h4>
             <p className='job-company-date'>Posted {job.date} by {job.company}</p>
-            <p className='job-salary'>Salary <strong>{job.salary}</strong></p>
+            <p className='job-salary'>Salary: <strong>{job.salary} per annum</strong></p>
             <p className='job-location'>Location: <strong>{job.location}</strong></p>
             <p className='job-description'>Description {job.jobdescription}</p>
           </div>

@@ -1,0 +1,51 @@
+.detail-job-wrapper{
+  min-height: 100vh;
+}
+
+.detail-job-title{
+  font-size: 30px;
+  margin: 20px 0px;
+  text-align: center;
+}
+
+.detail-job-company-date{
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.detail-job-loc-sal-wrapper{
+  margin: 10px auto;
+  width: 50%;
+  height: 100px;
+  border: 2px solid rgb(231, 230, 230);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.detail-job-desc-wrapper{
+  margin: 0 auto;
+  width: 50%;
+}
+
+.detail-job-desc-wrapper p{
+  line-height: 1.5;
+}
+
+.detail-job-upload{
+  margin: 40px auto;
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.detail-job-apply-btn{
+  background-color: rgb(14, 14, 100);
+  color: white;
+  padding: 10px 60px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
