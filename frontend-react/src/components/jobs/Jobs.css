@@ -1,0 +1,43 @@
+.main-jobs-wrapper{
+  min-height: 100vh;
+}
+
+.jobs-main-title{
+  font-size: 30px;
+  margin: 20px 0px;
+  text-align: center;
+}
+
+.jobs-wrapper{
+  padding: 10px 250px;
+  height: 100%;
+}
+
+.job{
+  height: 200px;
+  width: 100%;
+  margin: 10px 0px;
+  padding: 10px;
+  border: 2px solid rgb(231, 230, 230);
+  border-radius: 4px;
+}
+
+.job-title{
+  color: rgb(14, 14, 100);
+  margin-bottom: 5px;
+}
+
+.job-company-date{
+  margin-bottom: 20px;
+}
+
+.job-salary, .job-location{
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+
+.job-description {
+  height: 30%;
+  overflow: hidden;
+}

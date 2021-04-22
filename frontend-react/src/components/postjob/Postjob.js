@@ -25,6 +25,8 @@ function PostJob() {
           {errors.salary && <p>{errors.salary.message}</p>}
           <input type="text" placeholder="Location" {...register('location', { required: "This is required!" })} />
           {errors.location && <p>{errors.location.message}</p>}
+          <input type="text" placeholder="Your company" {...register('company', { required: "This is required!" })} />
+          {errors.company && <p>{errors.company.message}</p>}
           <label>Sector</label>
           <select {...register('sector')}>
             <option>Finance</option>
