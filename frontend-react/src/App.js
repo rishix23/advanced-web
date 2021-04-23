@@ -16,12 +16,21 @@ import { AuthContext } from './context/auth';
 
 
 function App() {
-  const [authTokens, setAuthTokens] = useState();
+  const [authTokens, setAuthTokens] = useState(localStorage.getItem('tokens') || null);
+
+  const setTokens = (data) => {
+    if (data == null) {
+      localStorage.removeItem("tokens")
+    } else {
+      localStorage.setItem("tokens", JSON.stringify(data));
+    }
+    setAuthTokens(data);
+  }
 
   return (
     <Router>
       <div className="App">
-        <AuthContext.Provider value={{ authTokens, setAuthTokens }}>
+        <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
           <Nav />
           <Switch>
             <Route path="/" exact component={Home} />
