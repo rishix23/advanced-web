@@ -2,7 +2,6 @@ from sqlalchemy import MetaData, Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 from sqlalchemy.orm import relationship
-
 from sqlalchemy.sql.schema import ForeignKey
 
 metadata = MetaData()
@@ -20,7 +19,7 @@ class Job(Base):
     sector = Column(String(50), nullable=True)
     description = Column(String(500), nullable=True)
     created = Column(DateTime, default=datetime.utcnow())
-    Users = relationship("User", secondary="application")
+    users = relationship("User", secondary="application")
 
 
 class User(Base):
