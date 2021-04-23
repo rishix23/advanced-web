@@ -1,22 +1,30 @@
 [
     {
         "jobId": "1",
-        "userId": "3"
+        "userId": "3",
+        "status": "Responded",
+        "message": "You did alright"
     },
     {
         "jobId": "2",
-        "userId": "3"
+        "userId": "3",
+        "status": "Rejected"
     },
     {
         "jobId": "3",
-        "userId": "3"
+        "userId": "3",
+        "status": "Sent"
     },
     {
         "jobId": "1",
-        "userId": "2"
+        "userId": "2",
+        "status": "Responded",
+        "message": "Let's have an office interview next week"
     },
     {
         "jobId": "1",
-        "userId": "1"
+        "userId": "1",
+        "status": "Accepted",
+        "messsage": "Good work, we'll see you next month"
     }
 ]

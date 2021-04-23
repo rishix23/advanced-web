@@ -36,8 +36,9 @@ class Application(Base):
     __tablename__ = "application"
     user_id = Column(String(36), ForeignKey("user.id"), primary_key=True)
     job_id = Column(String(36), ForeignKey("job.id"), primary_key=True)
-    status = Column(Integer, default=0)
+    status = Column(String(10), default=0)
     message = Column(String(500), nullable=True)
+    created = Column(DateTime, default=datetime.utcnow())
 
 
 class Employer(Base):
