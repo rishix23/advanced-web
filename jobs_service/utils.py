@@ -7,9 +7,7 @@ def parse_args_into_query_object(args, obj):
     if bad_keys:
         return output
 
-    common_keys = list(set(arg_keys) | set(obj_keys))
-
-    for key in common_keys:
+    for key in arg_keys:
         output[key] = args.get(key)
 
     return output
