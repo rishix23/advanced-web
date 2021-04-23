@@ -30,25 +30,79 @@ function Createcv() {
           {errors.strengths && <p>{errors.strengths.message}</p>}
           <label>Work experience</label>
           <div className='createcv-workexp-wrapper'>
-            <input type="text" id="workexprience-company" placeholder="Company" {...register('workexp.company', { required: "This is required!" })} />
-            {errors.workexp && <p>{errors.workexp.company.message}</p>}
-            <input type="text" id="workexprience-period" placeholder="Period" {...register('workexp.period', { required: "This is required!" })} />
-            {errors.workexp && <p>{errors.workexp.period.message}</p>}
+            <input type="text" id="workexprience-company-first" placeholder="Company" {...register('workexp[0].company', { required: "This is required!" })} />
+            {errors.workexp && <p>{errors.workexp[0].company.message}</p>}
+            <input type="text" id="workexprience-period-first" placeholder="Period" {...register('workexp[0].period', { required: "This is required!" })} />
+            {errors.workexp && <p>{errors.workexp[0].period.message}</p>}
           </div>
+          <textarea type="text" placeholder="Work experience description, max 250 characters!" {...register('workexp[0].description', { required: "This is required!", maxLength: { value: 250, message: "Max length 250 characters!" } })}>
+          </textarea>
+          {errors.workexp && <p>{errors.workexp[0].description.message}</p>}
+          <div className='createcv-workexp-wrapper'>
+            <input type="text" id="workexprience-company-second" placeholder="Company" {...register('workexp[1].company', { required: "This is required!" })} />
+            {errors.workexp && <p>{errors.workexp[1].company.message}</p>}
+            <input type="text" id="workexprience-period-second" placeholder="Period" {...register('workexp[1].period', { required: "This is required!" })} />
+            {errors.workexp && <p>{errors.workexp[1].period.message}</p>}
+          </div>
+          <textarea type="text" placeholder="Work experience description, max 250 characters!" {...register('workexp[1].description', { required: "This is required!", maxLength: { value: 250, message: "Max length 250 characters!" } })}>
+          </textarea>
+          {errors.workexp && <p>{errors.workexp[1].description.message}</p>}
+          <div className='createcv-workexp-wrapper'>
+            <input type="text" id="workexprience-company-third" placeholder="Company" {...register('workexp[2].company', { required: "This is required!" })} />
+            {errors.workexp && <p>{errors.workexp[2].company.message}</p>}
+            <input type="text" id="workexprience-period-third" placeholder="Period" {...register('workexp[2].period', { required: "This is required!" })} />
+            {errors.workexp && <p>{errors.workexp[2].period.message}</p>}
+          </div>
+          <textarea type="text" placeholder="Work experience description, max 250 characters!" {...register('workexp[2].description', { required: "This is required!", maxLength: { value: 250, message: "Max length 250 characters!" } })}>
+          </textarea>
+          {errors.workexp && <p>{errors.workexp[2].description.message}</p>}
           <label>Education</label>
           <div className='createcv-edu-wrapper'>
-            <input type="text" id="edu-school" placeholder="School" {...register('education.school', { required: "This is required!" })} />
-            {errors.education && <p>{errors.education.school.message}</p>}
-            <input type="text" id="edu-period" placeholder="Period" {...register('education.period', { required: "This is required!" })} />
-            {errors.education && <p>{errors.education.period.message}</p>}
+            <input type="text" id="edu-school-first" placeholder="School" {...register('education[0].school', { required: "This is required!" })} />
+            {errors.education && <p>{errors.education[0].school.message}</p>}
+            <input type="text" id="edu-period-first" placeholder="Period" {...register('education[0].period', { required: "This is required!" })} />
+            {errors.education && <p>{errors.education[0].period.message}</p>}
           </div>
+          <textarea type="text" placeholder="Education description, max 250 characters!" {...register('education[0].description', { required: "This is required!", maxLength: { value: 250, message: "Max length 250 characters!" } })}>
+          </textarea>
+          {errors.education && <p>{errors.education[0].description.message}</p>}
+          <div className='createcv-edu-wrapper'>
+            <input type="text" id="edu-school-second" placeholder="School" {...register('education[1].school', { required: "This is required!" })} />
+            {errors.education && <p>{errors.education[1].school.message}</p>}
+            <input type="text" id="edu-period-second" placeholder="Period" {...register('education[1].period', { required: "This is required!" })} />
+            {errors.education && <p>{errors.education[1].period.message}</p>}
+          </div>
+          <textarea type="text" placeholder="Education description, max 250 characters!" {...register('education[1].description', { required: "This is required!", maxLength: { value: 250, message: "Max length 250 characters!" } })}>
+          </textarea>
+          {errors.education && <p>{errors.education[1].description.message}</p>}
+          <div className='createcv-edu-wrapper'>
+            <input type="text" id="edu-school-third" placeholder="School" {...register('education[2].school', { required: "This is required!" })} />
+            {errors.education && <p>{errors.education[2].school.message}</p>}
+            <input type="text" id="edu-period-third" placeholder="Period" {...register('education[2].period', { required: "This is required!" })} />
+            {errors.education && <p>{errors.education[2].period.message}</p>}
+          </div>
+          <textarea type="text" placeholder="Education description, max 250 characters!" {...register('education[2].description', { required: "This is required!", maxLength: { value: 250, message: "Max length 250 characters!" } })}>
+          </textarea>
+          {errors.education && <p>{errors.education[2].description.message}</p>}
           <label>Voulnteering</label>
           <div className='createcv-volunteering-wrapper'>
-            <input type="text" id="volunteering-org" placeholder="Organisation" {...register('volunteering.org', { required: "This is required!" })} />
-            {errors.volunteering && <p>{errors.volunteering.org.message}</p>}
-            <input type="text" id="volunteering-period" placeholder="Period" {...register('volunteering.period', { required: "This is required!" })} />
-            {errors.volunteering && <p>{errors.volunteering.period.message}</p>}
+            <input type="text" id="volunteering-org-first" placeholder="Organisation" {...register('volunteering[0].org', { required: "This is required!" })} />
+            {errors.volunteering && <p>{errors.volunteering[0].org.message}</p>}
+            <input type="text" id="volunteering-period-first" placeholder="Period" {...register('volunteering[0].period', { required: "This is required!" })} />
+            {errors.volunteering && <p>{errors.volunteering[0].period.message}</p>}
           </div>
+          <textarea type="text" placeholder="Education description, max 250 characters!" {...register('volunteering[0].description', { required: "This is required!", maxLength: { value: 250, message: "Max length 250 characters!" } })}>
+          </textarea>
+          {errors.volunteering && <p>{errors.volunteering[0].description.message}</p>}
+          <div className='createcv-volunteering-wrapper'>
+            <input type="text" id="volunteering-org-first" placeholder="Organisation" {...register('volunteering[1].org', { required: "This is required!" })} />
+            {errors.volunteering && <p>{errors.volunteering[1].org.message}</p>}
+            <input type="text" id="volunteering-period-first" placeholder="Period" {...register('volunteering[1].period', { required: "This is required!" })} />
+            {errors.volunteering && <p>{errors.volunteering[1].period.message}</p>}
+          </div>
+          <textarea type="text" placeholder="Education description, max 250 characters!" {...register('volunteering[1].description', { required: "This is required!", maxLength: { value: 250, message: "Max length 250 characters!" } })}>
+          </textarea>
+          {errors.volunteering && <p>{errors.volunteering[1].description.message}</p>}
           <label>Skills</label>
           <textarea type="text" placeholder="List your key technical skills, max 250 characters!" {...register('skills', { required: "This is required!", maxLength: { value: 250, message: "Max length 250 characters!" } })}>
           </textarea>

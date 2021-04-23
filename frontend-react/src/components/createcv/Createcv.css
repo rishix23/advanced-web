@@ -61,6 +61,6 @@ input[type=submit]{
   justify-content: space-between;
 }
 
-#workexprience-company, #workexprience-period, #edu-school, #edu-period, #volunteering-org, #volunteering-period, #profqual-qual, #profqual-date{
+#workexprience-company-first,#workexprience-company-second,#workexprience-company-third, #workexprience-period-first, #workexprience-period-second, #workexprience-period-third, #edu-school-first, #edu-school-second, #edu-school-third, #edu-period-first, #edu-period-second, #edu-period-third,  #volunteering-org-first, #volunteering-period-first, #volunteering-org-second, #volunteering-period-second, #profqual-qual, #profqual-date{
   width: 48%;
 }
