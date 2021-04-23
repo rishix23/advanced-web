@@ -19,7 +19,7 @@ class Job(Base):
     sector = Column(String(50), nullable=True)
     description = Column(String(500), nullable=True)
     created = Column(DateTime, default=datetime.utcnow())
-    users = relationship("User", secondary="application")
+    users = relationship("User", secondary="application", back_populates="jobs")
 
 
 class User(Base):
@@ -29,7 +29,7 @@ class User(Base):
     last_name = Column(String(20), nullable=False)
     age = Column(Integer, nullable=True)
     created = Column(DateTime, default=datetime.utcnow())
-    jobs = relationship("Job", secondary="application")
+    jobs = relationship("Job", secondary="application", back_populates="users")
 
 
 class Application(Base):
