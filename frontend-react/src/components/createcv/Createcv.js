@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import './Createcv.css';
 
 function Createcv() {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const [isSubmittedCv, setSubmittedCv] = useState();
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const onSubmit = (formData) => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    };
+    fetch('http://localhost:5000/CVTemplate1', requestOptions)
+      .then(response => response.json())
+      .then(data => setSubmittedCv(data));
   }
 
   return (
@@ -116,6 +124,7 @@ function Createcv() {
           </div>
           <input type="submit" />
         </form>
+        {isSubmittedCv && console.log(isSubmittedCv)}
       </div>
     </div>
   );
