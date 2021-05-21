@@ -186,8 +186,63 @@ def handle_user(id):
 
 @app.route("/applications", methods=["GET", "POST", "PUT", "PATCH", "DELETE"])
 def handle_applications():
-    applications = db.session.query(Application).all()
-    return applications_schema.jsonify(applications)
+    if request.method == "GET":
+        if not request.args.get("userId") and not request.args.get("jobId"):
+            applications = db.session.query(Application).all()
+            return applications_schema.jsonify(applications)
+
+        if request.args.get("userId") and request.args.get("jobId"):
+            applications = db.session.query(Application).filter(
+                Application.user_id == request.args.get("userId"),
+                Application.job_id == request.args.get("jobId"),
+            )
+            return applications_schema.jsonify(applications)
+
+        if request.args.get("userId"):
+            applications = db.session.query(Application).filter(
+                Application.user_id == request.args.get("userId")
+            )
+            return applications_schema.jsonify(applications)
+
+        applications = db.session.query(Application).filter(
+            Application.job_id == request.args.get("jobId")
+        )
+        return applications_schema.jsonify(applications)
+
+    if request.method == "POST":
+        existing_application = db.session.query(Application).get(
+            {"user_id": request.json["userId"], "job_id": request.json["jobId"]}
+        )
+        if existing_application:
+            return "You've already applied for this job", 400
+
+        application = Application()
+        application.user_id = request.json["userId"]
+        application.job_id = request.json["jobId"]
+        application.status = "Created"
+        db.session.add(application)
+        db.session.commit()
+
+        return application_schema.jsonify(application), 201
+
+    if request.method == "PATCH":
+        existing_application = db.session.query(Application).get(
+            {"user_id": request.args.get("userId"), "job_id": request.args.get("jobId")}
+        )
+
+        if not existing_application:
+            return "Application does not exist", 400
+
+        if request.json.get("message", None):
+            existing_application.message = request.json["message"]
+
+        if request.json.get("status", None):
+            existing_application.message = request.json["status"]
+
+        db.session.add(existing_application)
+        db.session.commit()
+
+        return "Application updated"
 
 
 @app.route("/employers", methods=["GET", "POST"])
