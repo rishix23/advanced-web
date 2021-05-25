@@ -11,7 +11,6 @@ function Jobs() {
   const fetchJobs = async () => {
     const data = await fetch('http://localhost:5000/');
     const jobs = await data.json();
-    console.log(jobs);
     setJobs(jobs)
   }
 
