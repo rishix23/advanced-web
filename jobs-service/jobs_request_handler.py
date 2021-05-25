@@ -26,11 +26,11 @@ def get(request):
     if not request.args:
         session = requests.Session()
         resp = session.get("http://localhost:5001/jobs")
-        resp = session.get("http://localhost:5001/jobs")
+        #resp = session.get("http://localhost:5001/jobs")
         print(resp.elapsed.total_seconds())
-        # res = resp.json()
+        res = resp.json()
         # return json.dumps(res)
-        return "OK"
+        return res
 
     query_obj = parse_args_into_query_object(
         request.args, {"id": None, "company": None}
