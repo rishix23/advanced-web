@@ -1,0 +1,72 @@
+.myjobs-wrapper-main{
+  min-height: 100vh;
+  margin-bottom: 60px;
+}
+
+.myjobs-title{
+  font-size: 30px;
+  margin: 30px 0px;
+  text-align: center;
+}
+
+.myjobs-wrapper{
+  margin: 20px 180px;
+}
+
+.myjobs-individual{
+  height: 225px;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+}
+
+.myjobs-individual-info{
+  width: 80%;
+  padding: 15px;
+  border: 2px solid rgb(231, 230, 230);
+  border-radius: 4px;
+}
+
+.myjobs-individual-options{
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.myjobs-individual-title{
+  color: rgb(14, 14, 100);
+  margin-bottom: 2px;
+}
+
+.myjobs-individual-options-title{
+  color: rgb(14, 14, 100);
+}
+
+.myjobs-individual-posted{
+  margin-bottom: 10px;
+}
+
+.myjobs-individual-description-title{
+  margin-top: 10px;
+}
+
+.myjobs-individual-description{
+  height: 37px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.myjobs-individual-options-icons img{
+  width: 35px;
+  height: 35px;
+}
+
+.myjobs-individual-options-icons-button{
+  padding: 0;
+  border: none;
+  background: none;
+  margin-left: 25px;
+}
