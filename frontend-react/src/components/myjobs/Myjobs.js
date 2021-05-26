@@ -15,9 +15,9 @@ function Myjobs() {
   const { authTokens } = useAuth();
 
   const fetchUserJobs = async () => {
-    const data = await fetch(`http://localhost:5001/jobs/${JSON.parse(authTokens).userid}`);
+    console.log("dfsfsdfdsdfs", authTokens)
+    const data = await fetch(`http://localhost:5001/jobs/${authTokens}`);
     const userJobs = await data.json();
-    console.log(userJobs)
     setUserJobs(userJobs)
   }
 
@@ -34,7 +34,10 @@ function Myjobs() {
       <div className='myjobs-wrapper'>
         <div className='myjobs-individual'>
           <div className='myjobs-individual-info'>
-            <p className='myjobs-individual-title'>{userJobs.title}</p>
+            <div className='myjobs-individual-applicants'>
+              <p className='myjobs-individual-title'>{userJobs.title}</p>
+              <strong><Link to={`/myjobs/${userJobs.id}`}>View all applicants</Link></strong>
+            </div>
             <p className='myjobs-individual-posted'>Date posted: {userJobs.created}</p>
             <p>Location: {userJobs.location}</p>
             <p>Start date: {userJobs.start_date}</p>
@@ -43,14 +46,12 @@ function Myjobs() {
             <p className='myjobs-individual-description'>{userJobs.description}</p>
           </div>
           <div className='myjobs-individual-options'>
-            <p className='myjobs-individual-options-title'>Options</p>
             <div className='myjobs-individual-options-icons'>
               <Link to="/">
                 <img src={editicon} alt="" />
               </Link>
               <button className="myjobs-individual-options-icons-button"><img src={deleteicon} alt="" onClick={myFunction} /></button>
             </div>
-            <Link to={`/myjobs/${userJobs.id}`}>View all applicants</Link>
           </div>
         </div>
       </div>

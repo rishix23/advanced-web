@@ -32,16 +32,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 15px;
 }
 
-.myjobs-individual-title{
-  color: rgb(14, 14, 100);
-  margin-bottom: 2px;
+.myjobs-individual-applicants{
+  display: flex;
+  justify-content: space-between;
 }
 
-.myjobs-individual-options-title{
+.myjobs-individual-title{
   color: rgb(14, 14, 100);
 }
 
