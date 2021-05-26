@@ -17,13 +17,17 @@ function JobsDetail({ match }) {
 
   const [job, setJob] = useState({});
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
     const formData = new FormData();
+    formData.append("jobid", match.params.id)
+    formData.append("fullname", data.fullname)
+    formData.append("email", data.email)
+    formData.append("phone", data.phone)
     formData.append("resume", data.resume[0]);
-    console.log(data.resume[0])
   }
+
   return (
     <div className='detail-job-wrapper'>
       <h3 className='detail-job-title'>{job.title}</h3>
@@ -35,9 +39,18 @@ function JobsDetail({ match }) {
       <div className='detail-job-desc-wrapper'>
         <p>{job.description}</p>
       </div>
+      <h4 className='apply-title'>Quick apply</h4>
       <div className='detail-job-upload'>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <input type="file"  {...register('resume')} />
+          <input type="text" placeholder="Full name" {...register('fullname', { required: "This is required!" })} />
+          {errors.fullname && <p>{errors.fullname.message}</p>}
+          <input type="text" placeholder="Email" {...register('email', { required: "This is required!" })} />
+          {errors.email && <p>{errors.email.message}</p>}
+          <input type="text" placeholder="Contact Number" {...register('phone', { required: "This is required!" })} />
+          {errors.phone && <p>{errors.phone.message}</p>}
+          <p>Your CV pdf format</p>
+          <input type="file"  {...register('resume', { required: "This is required!" })} />
+          {errors.resume && <p>{errors.resume.message}</p>}
           <button className='detail-job-apply-btn'>Apply</button>
         </form>
       </div>
