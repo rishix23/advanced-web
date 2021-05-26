@@ -32,6 +32,9 @@
 .myjobs-individual-applicants-wrapper{
   display: flex;
   align-items: center;
+  border: 1px solid rgb(187, 184, 184);
+  border-radius: 4px;
+  padding: 10px;
 }
 .myjobs-individual-applicants img{
   width: 35px;
@@ -47,6 +50,7 @@
 
 .myjobs-individual-title{
   color: rgb(14, 14, 100);
+  font-size: 20px;
 }
 
 .myjobs-individual-description-title{
