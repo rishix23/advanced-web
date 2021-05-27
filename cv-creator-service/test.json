@@ -1,0 +1,28 @@
+    {'address': 'qwe', 
+    'telephone': 'e', 
+    'email': 'wqe', 
+    'fullname': 'wqe', 
+    'strengths': 'wqe', 
+    'workexp': [
+        {'company': 'as', 'period': '2012', 'description': 'wqe'
+        },
+        {'company': 'wqe', 'period': 'wqe', 'description': 'wqe'
+        },
+        {'company': 'wqe', 'period': 'wqe', 'description': 'wqe'
+        }
+    ], 'education': [
+        {'school': 'wqe', 'period': 'wqe', 'description': 'wqe'
+        },
+        {'school': 'wqe', 'period': 'wqe', 'description': 'v'
+        },
+        {'school': 'wqe', 'period': 'wqe', 'description': 'wqe'
+        }
+    ], 'volunteering': [
+        {'org': 'wqe', 'period': 'wqewqe', 'description': 'wqe'
+        },
+        {'org': 'wqe', 'period': 'wqe', 'description': 'wqe'
+        }
+    ], 'skills': 'wqe', 
+        'profqual': {'qual': 'wqe', 'date': 'wqe'
+    }
+}
