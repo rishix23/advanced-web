@@ -272,7 +272,7 @@ class JobSchema(ma.Schema):
 
 class ApplicationSchema(ma.Schema):
     class Meta:
-        fields = ("employer_id", "job_id", "status", "message", "created")
+        fields = ("id", "job_id", "full_name", "phone", "email", "created")
 
 
 class EmployerSchema(ma.Schema):

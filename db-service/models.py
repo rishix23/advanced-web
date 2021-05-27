@@ -1,3 +1,11 @@
+"""
+models.py
+
+Creates and defines models used throughout the application. This needs to be shared by
+a number of different services. ONLY EDIT THIS FILE AT THE APPLICATION ROOT, NOT IN AN
+INDIVIDUAL SERVICE. This file is copied from the root into individual services at build.
+"""
+
 from sqlalchemy import MetaData, Column, Integer, String, DateTime, Date
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
@@ -24,10 +32,11 @@ class Job(Base):
 
 class Application(Base):
     __tablename__ = "application"
-    employer_id = Column(String(36), ForeignKey("employer.id"), primary_key=True)
-    job_id = Column(String(36), ForeignKey("job.id"), primary_key=True)
-    status = Column(String(10), default=0)
-    message = Column(String(500), nullable=True)
+    id = Column(String(36), primary_key=True)
+    job_id = Column(String(36), ForeignKey("job.id"))
+    full_name = Column(String(50), nullable=False)
+    phone = Column(String(20), nullable=False)
+    email = Column(String(60), nullable=False)
     created = Column(DateTime, default=datetime.utcnow())
 
 
