@@ -1,9 +1,10 @@
 import React from 'react';
 import './Applicants.css';
 
-function Applicants() {
+function Applicants({ match }) {
   return (
     <div className='applicants-wrapper-main'>
+      {console.log("4867bnd", match.params.id)}
       <h1 className='applicants-title'>Applicants</h1>
       <div className='grid-wrapper'>
         <div className='grid'>
