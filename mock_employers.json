@@ -1,0 +1,23 @@
+[
+	{
+		"id": "31775fce-4cd7-4500-bf83-2c54283e5deb",
+		"firstName": "John",
+		"lastName": "Smith",
+		"email": "j.smith@gmail.com",
+		"password": "$2b$12$Jy.P38Wdf/5mblXqOYzhnuGLySHbntnJkYGbZiiW6uBef4W94fG36"
+	},
+	{
+		"id": "8d98878e-4af5-4d50-ad41-457b1b840eff",
+		"firstName": "Kate",
+		"lastName": "Smith",
+		"email": "k.smith@gmail.com",
+		"password": "$2b$12$Jy.P38Wdf/5mblXqOYzhnuGLySHbntnJkYGbZiiW6uBef4W94fG36"
+	},
+	{
+		"id": "8343d252-890b-49e4-a3b6-2ae7eb2c9741",
+		"firstName": "Joe",
+		"lastName": "Bloggs",
+		"email": "j.bloggs@gmail.com",
+		"password": "$2b$12$Jy.P38Wdf/5mblXqOYzhnuGLySHbntnJkYGbZiiW6uBef4W94fG36"
+	}
+]

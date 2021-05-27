@@ -259,7 +259,8 @@ class JobSchema(ma.Schema):
     class Meta:
         fields = (
             "id",
-            "employer_id" "title",
+            "employer_id",
+            "title",
             "salary",
             "start_date",
             "location",
