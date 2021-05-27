@@ -1,9 +1,8 @@
 from datetime import date
-from flask import Flask, request, make_response, jsonify
+from flask import Flask, request, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-from models import metadata, Job, User, Application, Employer
-import uuid
+from models import metadata, Job, Application, Employer
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
@@ -24,7 +23,8 @@ def handle_jobs():
 
     if request.method == "POST":
         job = Job()
-        job.id = str(uuid.uuid4())
+        job.id = request.json.get("id", "")
+        job.employer_id = request.json.get("employerId", "")
         job.title = request.json.get("title", "")
         job.salary = request.json.get("salary", 0)
         # Assuming a date arrives in the format YYYY-MM-DD
@@ -44,7 +44,7 @@ def handle_jobs():
 
 @app.route("/jobs/<id>", methods=["GET", "PUT", "PATCH", "DELETE", "OPTIONS"])
 def handle_job(id):
-    if request.method == "OPTIONS": # CORS preflight
+    if request.method == "OPTIONS":  # CORS preflight
         return _build_cors_prelight_response()
 
     if request.method == "GET":
@@ -58,6 +58,7 @@ def handle_job(id):
 
         job = Job()
         job.id = id
+        job.employer_id = request.json.get("employerId", "")
         job.title = request.json.get("title", "")
         job.salary = request.json.get("salary", 0)
         # Assuming a date arrives in the format YYYY-MM-DD
@@ -111,99 +112,23 @@ def handle_job(id):
         return f"Deleted job with id: {job.id}"
 
 
-@app.route("/users", methods=["GET", "POST"])
-def handle_users():
-    if request.method == "GET":
-        users = db.session.query(User).all()
-        return users_schema.jsonify(users)
-
-    if request.method == "POST":
-        user = User()
-        user.id = str(uuid.uuid4())
-        user.first_name = request.json.get("firstName", "")
-        user.last_name = request.json.get("lastName", "")
-        user.age = request.json.get("age", 0)
-        db.session.add(user)
-        db.session.commit()
-
-        return user_schema.jsonify(user), 201
-
-
-@app.route("/users/<id>", methods=["GET", "PUT", "PATCH", "DELETE"])
-def handle_user(id):
-    if request.method == "GET":
-        user = db.session.query(User).get({"id": id})
-        return user_schema.jsonify(user)
-
-    if request.method == "PUT":
-        user = db.session.query(User).get({"id": id})
-        if not user:
-            return "user not found", 400
-
-        user = User()
-        user.id = id
-        user.first_name = request.json.get("firstName", "")
-        user.last_name = request.json.get("lastName", "")
-        user.age = request.json.get("age", 0)
-        db.session.add(user)
-        db.session.commit()
-
-        return user_schema.jsonify(user)
-
-    # MAYBE DON'T SUPPORT PATCH
-    # if request.method == "PATCH":
-    #     user = db.session.query(user).get({"id": id})
-    #     if not user:
-    #         return "user not found", 400
-
-    #     new_user = user()
-    #     new_user.id = id
-    #     new_user.title = user.title
-    #     new_user.salary = user.salary
-    #     new_user.start_date = user.start_date
-    #     new_user.location = user.location
-    #     new_user.company = user.company
-    #     new_user.sector = user.sector
-    #     new_user.description = user.description
-    #     for key, value in request.json.items():
-    #         if key == "start_date":
-    #             new_user = date(int(value[0:4]), int(value[5:7]), int(value[8:10]))
-    #         else:
-    #             new_user[key] = value
-
-    #     db.session.add(new_user)
-    #     db.session.commit()
-
-    #     return user_schema.jsonify(new_user)
-
-    if request.method == "DELETE":
-        user = db.session.query(User).get({"id": id})
-        if not user:
-            return "User not found", 400
-
-        db.session.delete(user)
-        db.session.commit()
-
-        return f"Deleted user with id: {user.id}"
-
-
 @app.route("/applications", methods=["GET", "POST", "PUT", "PATCH", "DELETE"])
 def handle_applications():
     if request.method == "GET":
-        if not request.args.get("userId") and not request.args.get("jobId"):
+        if not request.args.get("employrId") and not request.args.get("jobId"):
             applications = db.session.query(Application).all()
             return applications_schema.jsonify(applications)
 
-        if request.args.get("userId") and request.args.get("jobId"):
+        if request.args.get("employerId") and request.args.get("jobId"):
             applications = db.session.query(Application).filter(
-                Application.user_id == request.args.get("userId"),
+                Application.employer_id == request.args.get("employerId"),
                 Application.job_id == request.args.get("jobId"),
             )
             return applications_schema.jsonify(applications)
 
-        if request.args.get("userId"):
+        if request.args.get("employerId"):
             applications = db.session.query(Application).filter(
-                Application.user_id == request.args.get("userId")
+                Application.employer_id == request.args.get("employerId")
             )
             return applications_schema.jsonify(applications)
 
@@ -214,13 +139,13 @@ def handle_applications():
 
     if request.method == "POST":
         existing_application = db.session.query(Application).get(
-            {"user_id": request.json["userId"], "job_id": request.json["jobId"]}
+            {"employer_id": request.json["employerId"], "job_id": request.json["jobId"]}
         )
         if existing_application:
             return "You've already applied for this job", 400
 
         application = Application()
-        application.user_id = request.json["userId"]
+        application.employer_id = request.json["employerId"]
         application.job_id = request.json["jobId"]
         application.status = "Created"
         db.session.add(application)
@@ -230,7 +155,10 @@ def handle_applications():
 
     if request.method == "PATCH":
         existing_application = db.session.query(Application).get(
-            {"user_id": request.args.get("userId"), "job_id": request.args.get("jobId")}
+            {
+                "employer_id": request.args.get("employerId"),
+                "job_id": request.args.get("jobId"),
+            }
         )
 
         if not existing_application:
@@ -256,8 +184,11 @@ def handle_employers():
 
     if request.method == "POST":
         employer = Employer()
-        employer.id = str(uuid.uuid4())
-        employer.name = request.json.get("name", "")
+        employer.id = request.json.get("employerId", "")
+        employer.first_name = request.json.get("firstName", "")
+        employer.last_name = request.json.get("lastName", "")
+        employer.email = request.json.get("email", "")
+        employer.password = request.json.get("password", "")
         db.session.add(employer)
         db.session.commit()
 
@@ -277,7 +208,10 @@ def handle_employer(id):
 
         employer = Employer()
         employer.id = id
-        employer.name = request.json.get("name", "")
+        employer.first_name = request.json.get("firstName", "")
+        employer.last_name = request.json.get("lastName", "")
+        employer.email = request.json.get("email", "")
+        employer.password = request.json.get("password", "")
         db.session.add(employer)
         db.session.commit()
 
@@ -325,7 +259,7 @@ class JobSchema(ma.Schema):
     class Meta:
         fields = (
             "id",
-            "title",
+            "employer_id" "title",
             "salary",
             "start_date",
             "location",
@@ -336,27 +270,19 @@ class JobSchema(ma.Schema):
         )
 
 
-class UserSchema(ma.Schema):
-    class Meta:
-        fields = ("id", "first_name", "last_name", "age", "created")
-
-
 class ApplicationSchema(ma.Schema):
     class Meta:
-        fields = ("user_id", "job_id", "status", "message", "created")
+        fields = ("employer_id", "job_id", "status", "message", "created")
 
 
 class EmployerSchema(ma.Schema):
     class Meta:
-        fields = ("id", "name")
+        fields = ("id", "first_name", "last_name", "email", "password")
 
 
 # Initialise Schemas
 job_schema = JobSchema()
 jobs_schema = JobSchema(many=True)
-
-user_schema = UserSchema()
-users_schema = UserSchema(many=True)
 
 application_schema = ApplicationSchema()
 applications_schema = ApplicationSchema(many=True)
@@ -364,14 +290,16 @@ applications_schema = ApplicationSchema(many=True)
 employer_schema = EmployerSchema()
 employers_schema = EmployerSchema(many=True)
 
-#Functions that allow the frontend to recieve data from api 
+# Functions that allow the frontend to recieve data from api
+
 
 def _build_cors_prelight_response():
     response = make_response()
     response.headers.add("Access-Control-Allow-Origin", "*")
-    response.headers.add('Access-Control-Allow-Headers', "*")
-    response.headers.add('Access-Control-Allow-Methods', "*")
+    response.headers.add("Access-Control-Allow-Headers", "*")
+    response.headers.add("Access-Control-Allow-Methods", "*")
     return response
+
 
 def _corsify_actual_response(response):
     response.headers.add("Access-Control-Allow-Origin", "*")
