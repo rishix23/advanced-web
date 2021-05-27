@@ -37,7 +37,7 @@ function Myjobs() {
             <p className='myjobs-individual-title'>{userJobs.title}</p>
             <div className='myjobs-individual-applicants-wrapper'>
               <strong><Link className="applicants-link" to={`/myjobs/applicants/${userJobs.id}`}>View all applicants</Link></strong>
-              <Link to="/">
+              <Link to={`/myjobs/${userJobs.id}/edit`}>
                 <img src={editicon} alt="" />
               </Link>
               <button className="myjobs-individual-applicants-icons-button"><img src={deleteicon} alt="" onClick={myFunction} /></button>

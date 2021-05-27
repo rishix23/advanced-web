@@ -10,7 +10,8 @@ import Createcv from './components/createcv/Createcv';
 import Footer from './components/footer/Footer';
 import Postjob from './components/postjob/Postjob';
 import Myjobs from './components/myjobs/Myjobs';
-import Applicants from './components/applicants/Applicants'
+import Applicants from './components/applicants/Applicants';
+import EditJob from './components/editjob/EditJob';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import { AuthContext } from './context/auth';
@@ -43,6 +44,7 @@ function App() {
             <PrivateRoute path="/postjob" component={Postjob} />
             <PrivateRoute path="/myjobs" exact component={Myjobs} />
             <PrivateRoute path="/myjobs/applicants/:id" component={Applicants} />
+            <PrivateRoute path="/myjobs/:id/edit" component={EditJob} />
           </Switch>
         </AuthContext.Provider>
         <Footer />
