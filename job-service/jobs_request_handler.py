@@ -19,8 +19,6 @@ def list_methods():
 def handle(request):
     return request_director[request.method](request)
 
-
-# Job.query.order_by(Job.id).all()
 def get(request):
     if not request.args:
         resp = requests.get("http://localhost:5001/jobs")

@@ -179,12 +179,19 @@ def handle_applications():
 @app.route("/employers", methods=["GET", "POST"])
 def handle_employers():
     if request.method == "GET":
-        employers = db.session.query(Employer).all()
+        if not request.args:
+            employers = db.session.query(Employer).all()
+            return employers_schema.jsonify(employers)
+
+        employers = db.session.query(Employer).filter(
+            Employer.email == request.args.get("email")
+        )
+
         return employers_schema.jsonify(employers)
 
     if request.method == "POST":
         employer = Employer()
-        employer.id = request.json.get("employerId", "")
+        employer.id = request.json.get("id", "")
         employer.first_name = request.json.get("firstName", "")
         employer.last_name = request.json.get("lastName", "")
         employer.email = request.json.get("email", "")

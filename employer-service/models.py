@@ -45,7 +45,7 @@ class Employer(Base):
     id = Column(String(36), primary_key=True)
     first_name = Column(String(20), nullable=False)
     last_name = Column(String(20), nullable=False)
-    email = Column(String(60), nullable=False)
+    email = Column(String(50), nullable=False)
     password = Column(String(60), nullable=False)
     jobs = relationship("Job")
     created = Column(DateTime, default=datetime.utcnow())
