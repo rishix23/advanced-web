@@ -50,8 +50,8 @@ def employers():
             return _corsify_actual_response(
                 Response("Something went wrong, please try again later", 500)
             )
-
-        return _corsify_actual_response(Response(id, 201))
+        testresponse = {'userid' : id}
+        return _corsify_actual_response(jsonify(testresponse))
 
 
 # Necessary headers to allow frontend to authenticate api
