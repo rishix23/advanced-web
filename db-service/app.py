@@ -1,5 +1,5 @@
 from datetime import date
-from flask import Flask, request, make_response
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from models import metadata, Job, Application, Employer
@@ -42,14 +42,11 @@ def handle_jobs():
         return job_schema.jsonify(job), 201
 
 
-@app.route("/jobs/<id>", methods=["GET", "PUT", "PATCH", "DELETE", "OPTIONS"])
+@app.route("/jobs/<id>", methods=["GET", "PUT", "PATCH", "DELETE"])
 def handle_job(id):
-    if request.method == "OPTIONS":  # CORS preflight
-        return _build_cors_prelight_response()
-
     if request.method == "GET":
         job = db.session.query(Job).get({"id": id})
-        return _corsify_actual_response(job_schema.jsonify(job))
+        return job_schema.jsonify(job)
 
     if request.method == "PUT":
         job = db.session.query(Job).get({"id": id})
@@ -299,20 +296,6 @@ employer_schema = EmployerSchema()
 employers_schema = EmployerSchema(many=True)
 
 # Functions that allow the frontend to recieve data from api
-
-
-def _build_cors_prelight_response():
-    response = make_response()
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    response.headers.add("Access-Control-Allow-Headers", "*")
-    response.headers.add("Access-Control-Allow-Methods", "*")
-    return response
-
-
-def _corsify_actual_response(response):
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
-
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
