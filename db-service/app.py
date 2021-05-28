@@ -135,16 +135,13 @@ def handle_applications():
         return applications_schema.jsonify(applications)
 
     if request.method == "POST":
-        existing_application = db.session.query(Application).get(
-            {"employer_id": request.json["employerId"], "job_id": request.json["jobId"]}
-        )
-        if existing_application:
-            return "You've already applied for this job", 400
-
         application = Application()
-        application.employer_id = request.json["employerId"]
-        application.job_id = request.json["jobId"]
-        application.status = "Created"
+        application.id = request.form.get("id")
+        application.job_id = request.form.get("jobId")
+        application.full_name = request.form.get("fullname")
+        application.phone = request.form.get("phone")
+        application.email = request.form.get("email")
+        application.resume = request.files.get("resume").read()
         db.session.add(application)
         db.session.commit()
 

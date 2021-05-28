@@ -6,8 +6,7 @@ import job_request_handler
 app = Flask(__name__)
 
 
-@app.route("/", methods=["OPTIONS", "GET"])
-# @app.route("/", methods=list(jobs_request_handler.list_methods()) + ["OPTIONS"])
+@app.route("/", methods=list(jobs_request_handler.list_methods()) + ["OPTIONS"])
 def jobs():
     if request.method == "OPTIONS":  # CORS preflight
         return _build_cors_prelight_response()
@@ -21,7 +20,8 @@ def job(id):
         return _build_cors_prelight_response()
     else:
         return _corsify_actual_response(
-            jsonify(job_request_handler.handle(request, id)))
+            jsonify(job_request_handler.handle(request, id))
+        )
 
 
 # Necessary headers to allow frontend to authenticate api

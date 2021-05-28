@@ -11,6 +11,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
+from sqlalchemy.sql.sqltypes import LargeBinary
 
 metadata = MetaData()
 Base = declarative_base(metadata=metadata)
@@ -37,6 +38,7 @@ class Application(Base):
     full_name = Column(String(50), nullable=False)
     phone = Column(String(20), nullable=False)
     email = Column(String(60), nullable=False)
+    resume = Column(LargeBinary, nullable=False)
     created = Column(DateTime, default=datetime.utcnow())
 
 

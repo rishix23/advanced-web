@@ -22,23 +22,23 @@ function JobsDetail({ match }) {
 		formState: { errors },
 	} = useForm();
 
-	const onSubmit = (data) => {
+	const onSubmit = data => {
 		const formData = new FormData();
-		formData.append('jobid', match.params.id);
+		formData.append('jobId', match.params.id);
 		formData.append('fullname', data.fullname);
 		formData.append('email', data.email);
 		formData.append('phone', data.phone);
 		formData.append('resume', data.resume[0]);
 
 		const requestOptions = {
-		  method: 'POST',
-		  headers: { 'Content-Type': 'application/json' },
-		  body: JSON.stringify(formData)
+			method: 'POST',
+			body: formData,
 		};
-		fetch('http://localhost:5003/confirmApplication', requestOptions)
-		  .then(response => response.json())
+		fetch('http://localhost:5003', requestOptions).then(response =>
+			response.json()
+		);
 		//   .then(data => setSubmittedCv(data));
-	  }
+	};
 
 	return (
 		<div className='detail-job-wrapper'>
