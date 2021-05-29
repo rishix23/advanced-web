@@ -4,4 +4,6 @@ itsdangerous==2.0.1
 Jinja2==3.0.1
 MarkupSafe==2.0.1
 Werkzeug==2.0.1
-requests==2.25.0
+flask-marshmallow==0.14.0
+Flask-SQLAlchemy==2.5.1
+marshmallow-sqlalchemy==0.24.2

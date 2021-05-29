@@ -1,8 +1,6 @@
-from flask import Flask, render_template, request, make_response
-from flask.json import jsonify
+from flask import Flask, request, make_response, jsonify
 import requests
 from uuid import uuid4
-from models import Application
 
 DB_URL = "http://localhost:5001/applications"
 
@@ -61,4 +59,4 @@ def _corsify_actual_response(response):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5003)
+    app.run(host="0.0.0.0", port=5000)
