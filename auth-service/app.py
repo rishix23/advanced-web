@@ -1,6 +1,5 @@
 from flask import Flask, request, make_response
 from flask.json import jsonify
-from flask.wrappers import Response
 import requests
 import bcrypt
 
@@ -19,15 +18,17 @@ def employers():
 
         employers = requests.get(f"{DB_URL}?email={email}").json()
         if len(employers) < 1:
-            return _corsify_actual_response(Response("Cannot find user", 400))
+            return _corsify_actual_response(
+                jsonify({"Message": "Cannot find user"}), 400
+            )
 
         employer = employers[0]
         hashed_pw = employer["password"]
 
         if bcrypt.checkpw(bytes(password, "utf-8"), bytes(hashed_pw, "utf-8")):
-            return _corsify_actual_response(Response(employer["id"], 200))
+            return _corsify_actual_response(jsonify({"id": employer["id"]}), 200)
 
-        return _corsify_actual_response(Response("Invalid", 400))
+        return _corsify_actual_response(jsonify({"Message": "Invalid"}), 400)
 
 
 def _build_cors_prelight_response():
@@ -38,8 +39,9 @@ def _build_cors_prelight_response():
     return response
 
 
-def _corsify_actual_response(response):
+def _corsify_actual_response(response, status_code=200):
     response.headers.add("Access-Control-Allow-Origin", "*")
+    response.status_code = status_code
     return response
 
 

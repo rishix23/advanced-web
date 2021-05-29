@@ -1,5 +1,5 @@
 from datetime import date
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from models import metadata, Job, Application, Employer
@@ -18,6 +18,12 @@ with app.app_context():
 @app.route("/jobs", methods=["GET", "POST"])
 def handle_jobs():
     if request.method == "GET":
+        if request.args.get("employerId"):
+            jobs = db.session.query(Job).filter(
+                Job.employer_id == request.args.get("employerId")
+            )
+            return jobs_schema.jsonify(jobs)
+
         jobs = db.session.query(Job).all()
         return jobs_schema.jsonify(jobs)
 
@@ -27,11 +33,7 @@ def handle_jobs():
         job.employer_id = request.json.get("employerId", "")
         job.title = request.json.get("title", "")
         job.salary = request.json.get("salary", 0)
-        # Assuming a date arrives in the format YYYY-MM-DD
-        request_date = request.json.get("startDate", str(date.today()))
-        job.start_date = date(
-            int(request_date[0:4]), int(request_date[5:7]), int(request_date[8:10])
-        )
+        job.start_date = request.json.get("startDate", str(date.today()))
         job.location = request.json.get("location", "")
         job.company = request.json.get("company", "")
         job.sector = request.json.get("sector", "")
@@ -51,18 +53,15 @@ def handle_job(id):
     if request.method == "PUT":
         job = db.session.query(Job).get({"id": id})
         if not job:
-            return "Job not found", 400
+            return jsonify({"Message": "Job not found"}), 400
 
+        db.session.delete(job)
         job = Job()
         job.id = id
         job.employer_id = request.json.get("employerId", "")
         job.title = request.json.get("title", "")
         job.salary = request.json.get("salary", 0)
-        # Assuming a date arrives in the format YYYY-MM-DD
-        request_date = request.json.get("startDate", str(date.today()))
-        job.start_date = date(
-            int(request_date[0:4]), int(request_date[5:7]), int(request_date[8:10])
-        )
+        job.start_date = request.json.get("startDate", str(date.today()))
         job.location = request.json.get("location", "")
         job.company = request.json.get("company", "")
         job.sector = request.json.get("sector", "")
@@ -72,41 +71,55 @@ def handle_job(id):
 
         return job_schema.jsonify(job)
 
-    # MAYBE DON'T SUPPORT PATCH
-    # if request.method == "PATCH":
-    #     job = db.session.query(Job).get({"id": id})
-    #     if not job:
-    #         return "Job not found", 400
+    if request.method == "PATCH":
+        job = db.session.query(Job).get({"id": id})
+        if not job:
+            return jsonify({"Message": "Job not found"}), 400
 
-    #     new_job = Job()
-    #     new_job.id = id
-    #     new_job.title = job.title
-    #     new_job.salary = job.salary
-    #     new_job.start_date = job.start_date
-    #     new_job.location = job.location
-    #     new_job.company = job.company
-    #     new_job.sector = job.sector
-    #     new_job.description = job.description
-    #     for key, value in request.json.items():
-    #         if key == "start_date":
-    #             new_job = date(int(value[0:4]), int(value[5:7]), int(value[8:10]))
-    #         else:
-    #             new_job[key] = value
+        new_job = Job()
+        new_job.id = id
+        new_job.employer_id = job.employer_id
+        new_job.title = (
+            request.json["title"] if request.json.get("title") else job.title
+        )
+        new_job.salary = (
+            request.json["salary"] if request.json.get("salary") else job.salary
+        )
+        new_job.start_date = (
+            request.json["startDate"]
+            if request.json.get("startDate")
+            else job.start_date
+        )
+        new_job.location = (
+            request.json["location"] if request.json.get("location") else job.location
+        )
+        new_job.company = (
+            request.json["company"] if request.json.get("company") else job.company
+        )
+        new_job.sector = (
+            request.json["sector"] if request.json.get("sector") else job.sector
+        )
+        new_job.description = (
+            request.json["description"]
+            if request.json.get("description")
+            else job.description
+        )
+        new_job.created = job.created
 
-    #     db.session.add(new_job)
-    #     db.session.commit()
+        db.session.add(new_job)
+        db.session.commit()
 
-    #     return job_schema.jsonify(new_job)
+        return job_schema.jsonify(new_job)
 
     if request.method == "DELETE":
         job = db.session.query(Job).get({"id": id})
         if not job:
-            return "Job not found", 400
+            return jsonify({"Message": "Job not found"}), 400
 
         db.session.delete(job)
         db.session.commit()
 
-        return f"Deleted job with id: {job.id}"
+        return jsonify({"Message": f"Deleted job with id: {job.id}"})
 
 
 @app.route("/applications", methods=["GET", "POST", "PUT", "PATCH", "DELETE"])
@@ -205,7 +218,7 @@ def handle_employer(id):
     if request.method == "PUT":
         employer = db.session.query(Employer).get({"id": id})
         if not employer:
-            return "Employer not found", 400
+            return jsonify({"Message": "Employer not found"}), 400
 
         employer = Employer()
         employer.id = id
@@ -247,12 +260,12 @@ def handle_employer(id):
     if request.method == "DELETE":
         employer = db.session.query(Employer).get({"id": id})
         if not employer:
-            return "employer not found", 400
+            return jsonify({"Message": "employer not found"}), 400
 
         db.session.delete(employer)
         db.session.commit()
 
-        return f"Deleted employer with id: {employer.id}"
+        return jsonify({"Message": f"Deleted employer with id: {employer.id}"})
 
 
 # Define Schemas
