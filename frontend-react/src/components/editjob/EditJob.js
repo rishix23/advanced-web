@@ -10,11 +10,20 @@ function EditJob({ match }) {
     const requestOptions = {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
     };
-    fetch(`http://localhost:5000/${match.params.id}?title=${formData.title}&salary=${formData.salary}&location=${formData.location}&company=${formData.company}&sector=${formData.sector}&description=${formData.description}`, requestOptions)
+    fetch(`http://localhost:5000/${match.params.id}`, requestOptions)
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => handleResponse(data));
   }
+
+  const handleResponse = (dataReceived) => {
+    if ("id" in dataReceived) {
+      setJobEdited("Your job has been successfully edited!");
+    } else {
+      setJobEdited("Error please try again later");
+    }
+  };
 
   return (
     <div className='editjob-main-wrapper'>
@@ -40,7 +49,7 @@ function EditJob({ match }) {
           {errors.jobdescription && <p>{errors.jobdescription.message}</p>}
           <input type="submit" />
         </form>
-        {isJobEdited && <h4 className='editjob-msg'>Your job has been successfully edited!</h4>}
+        {isJobEdited && <h4 className='editjob-msg'>{isJobEdited}</h4>}
       </div>
     </div>
   );
