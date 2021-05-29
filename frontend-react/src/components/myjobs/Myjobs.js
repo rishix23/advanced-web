@@ -18,8 +18,8 @@ function Myjobs() {
     const employerid = authTokens.slice(1, -1);
     const data = await fetch(`http://localhost:5000/?employerId=${employerid}`);
     const userJobs = await data.json();
-    setUserJobs(userJobs)
-    console.log(userJobs)
+    setUserJobs(userJobs);
+    console.log(userJobs);
   }
 
   const myFunction = () => {
@@ -34,23 +34,23 @@ function Myjobs() {
       <h1 className='myjobs-title'>1 Active job(s)</h1>
       <div className='myjobs-wrapper'>
         {userJobs.map(job => (
-          <div className='myjobs-individual-info'>
+          <div key={job.id} className='myjobs-individual-info'>
             <div className='myjobs-individual-applicants'>
               <p className='myjobs-individual-title'>{job.title}</p>
               <div className='myjobs-individual-applicants-wrapper'>
                 <strong><Link className="applicants-link" to={`/myjobs/applicants/${job.id}`}>View all applicants</Link></strong>
-                <Link to={`/myjobs/1/edit`}>
+                <Link to={`/myjobs/${job.id}/edit`}>
                   <img src={editicon} alt="" />
                 </Link>
                 <button className="myjobs-individual-applicants-icons-button"><img src={deleteicon} alt="" onClick={myFunction} /></button>
               </div>
             </div>
-            <p>Date posted: jobs created time</p>
-            <p>Location: jobs location</p>
-            <p>Start date: jobs start date</p>
+            <p>Date posted: {job.created}</p>
+            <p>Location: {job.location}</p>
+            <p>Start date: {job.start_date}</p>
             <p>Salary: jobs salary</p>
             <p className='myjobs-individual-description-title'>Description:</p>
-            <p className='myjobs-individual-description'>desc desc desc</p>
+            <p className='myjobs-individual-description'>{job.description}</p>
           </div>
         ))}
       </div>
