@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request, make_response
+from flask import Flask, request, make_response
 from flask.json import jsonify
 import requests
 from uuid import uuid4
-from models import Application
 
 DB_URL = "http://localhost:5001/applications"
 
@@ -25,7 +24,10 @@ def confirmApplication():
         except:
             return _corsify_actual_response(
                 jsonify(
-                    {"message": "JobID, Fullname, Phone, Email and Resume are required"}
+                    {
+                        "message": "JobID, Fullname, Phone, Email and Resume are required"
+                    },
+                    400,
                 )
             )
 
@@ -41,10 +43,11 @@ def confirmApplication():
 
         if not response.ok:
             return _corsify_actual_response(
-                jsonify({"Message": "Something went wrong, please try again later"})
+                jsonify({"Message": "Something went wrong, please try again later"}),
+                response.status_code,
             )
 
-        return _corsify_actual_response(response.json())
+        return _corsify_actual_response(jsonify(response.json()), response.status_code)
 
 
 def _build_cors_prelight_response():
@@ -55,8 +58,9 @@ def _build_cors_prelight_response():
     return response
 
 
-def _corsify_actual_response(response):
+def _corsify_actual_response(response, status_code=200):
     response.headers.add("Access-Control-Allow-Origin", "*")
+    response.status_code = status_code
     return response
 
 
