@@ -1,4 +1,5 @@
-from flask import Flask, request, make_response
+from io import BytesIO
+from flask import Flask, request, make_response, send_file
 from flask.json import jsonify
 import requests
 from uuid import uuid4
@@ -8,12 +9,18 @@ DB_URL = "http://localhost:5001/applications"
 app = Flask(__name__)
 
 
-@app.route("/", methods=["POST", "OPTIONS"])
-def confirmApplication():
+@app.route("/", methods=["GET", "POST", "OPTIONS"])
+def index():
     # CORS preflight
     if request.method == "OPTIONS":
         return _build_cors_prelight_response()
     # The actual request following the preflight
+    if request.method == "GET":
+        if request.args.get("jobId"):
+            response = requests.get(f"{DB_URL}?jobId={request.args['jobId']}")
+            return _corsify_actual_response(
+                jsonify(response.json()), response.status_code
+            )
     if request.method == "POST":
         try:
             job_id = request.form.get("jobId")
@@ -48,6 +55,25 @@ def confirmApplication():
             )
 
         return _corsify_actual_response(jsonify(response.json()), response.status_code)
+
+
+@app.route("/<id>", methods=["POST", "OPTIONS"])
+def download(id):
+    if request.method == "OPTIONS":
+        return _build_cors_prelight_response()
+    if request.method == "POST":
+        resp = requests.post(f"{DB_URL}/{id}")
+        response = send_file(
+            BytesIO(resp.content),
+            as_attachment=True,
+            attachment_filename=resp.headers["Content-Disposition"]
+            .split(" ", 1)[1]
+            .split("=")[1]
+            .replace('"', "")
+            .replace("'", ""),
+        )
+
+        return _corsify_actual_response(response)
 
 
 def _build_cors_prelight_response():

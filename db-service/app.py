@@ -1,8 +1,9 @@
 from datetime import date
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from models import metadata, Job, Application, Employer
+from io import BytesIO
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
@@ -125,27 +126,11 @@ def handle_job(id):
 @app.route("/applications", methods=["GET", "POST", "PUT", "PATCH", "DELETE"])
 def handle_applications():
     if request.method == "GET":
-        if not request.args.get("employrId") and not request.args.get("jobId"):
-            applications = db.session.query(Application).all()
-            return applications_schema.jsonify(applications)
-
-        if request.args.get("employerId") and request.args.get("jobId"):
+        if request.args.get("jobId"):
             applications = db.session.query(Application).filter(
-                Application.employer_id == request.args.get("employerId"),
-                Application.job_id == request.args.get("jobId"),
+                Application.job_id == request.args["jobId"]
             )
             return applications_schema.jsonify(applications)
-
-        if request.args.get("employerId"):
-            applications = db.session.query(Application).filter(
-                Application.employer_id == request.args.get("employerId")
-            )
-            return applications_schema.jsonify(applications)
-
-        applications = db.session.query(Application).filter(
-            Application.job_id == request.args.get("jobId")
-        )
-        return applications_schema.jsonify(applications)
 
     if request.method == "POST":
         application = Application()
@@ -181,6 +166,17 @@ def handle_applications():
         db.session.commit()
 
         return "Application updated"
+
+
+@app.route("/applications/<id>", methods=["POST"])
+def handle_application(id):
+    if request.method == "POST":
+        application = db.session.query(Application).get({"id": id})
+        return send_file(
+            BytesIO(application.resume),
+            attachment_filename=f"{application.full_name} resume.docx",
+            as_attachment=True,
+        )
 
 
 @app.route("/employers", methods=["GET", "POST"])
