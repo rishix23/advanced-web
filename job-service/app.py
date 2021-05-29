@@ -58,7 +58,9 @@ def jobs():
 
             response = requests.post(DB_URL, json=job)
 
-            return _corsify_actual_response(jsonify(response.json()), response.status_code)
+            return _corsify_actual_response(
+                jsonify(response.json()), response.status_code
+            )
 
 
 @app.route("/<id>", methods=["GET", "PATCH", "DELETE", "OPTIONS"])
@@ -74,7 +76,7 @@ def job(id):
             return _corsify_actual_response(jsonify(resp.json()), resp.status_code)
         if request.method == "PATCH":
             resp = requests.patch(
-                f"{DB_URL}/{id}", parse_args_into_query_object(request.args, Job)
+                f"{DB_URL}/{id}", json=parse_args_into_query_object(request.json, Job)
             )
             return _corsify_actual_response(jsonify(resp.json()), resp.status_code)
 

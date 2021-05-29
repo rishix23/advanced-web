@@ -83,8 +83,9 @@ def handle_job(id):
         if not job:
             return jsonify({"Message": "Job not found"}), 400
 
+        db.session.delete(job)
         new_job = Job()
-        new_job.id = id
+        new_job.id = job.id
         new_job.employer_id = job.employer_id
         new_job.title = (
             request.json["title"] if request.json.get("title") else job.title

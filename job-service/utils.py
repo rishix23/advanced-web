@@ -5,7 +5,7 @@ import json
 def parse_args_into_query_object(args, obj):
     output = {}
     arg_keys = [key for key in args.keys()]
-    obj_keys = [key for key in obj.keys()]
+    obj_keys = [key for key in obj.__dict__.keys()]
     bad_keys = [key for key in arg_keys if key not in obj_keys]
 
     if bad_keys:
