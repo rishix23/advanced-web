@@ -15,10 +15,11 @@ function Myjobs() {
   const { authTokens } = useAuth();
 
   const fetchUserJobs = async () => {
-    console.log("dfsfsdfdsdfs", authTokens)
-    const data = await fetch(`http://localhost:5001/jobs/${authTokens}`);
+    const employerid = authTokens.slice(1, -1);
+    const data = await fetch(`http://localhost:5000/?employerId=${employerid}`);
     const userJobs = await data.json();
     setUserJobs(userJobs)
+    console.log(userJobs)
   }
 
   const myFunction = () => {
@@ -26,30 +27,32 @@ function Myjobs() {
   }
 
   //remember to change to array
-  const [userJobs, setUserJobs] = useState({});
+  const [userJobs, setUserJobs] = useState([]);
 
   return (
     <div className='myjobs-wrapper-main'>
       <h1 className='myjobs-title'>1 Active job(s)</h1>
       <div className='myjobs-wrapper'>
-        <div className='myjobs-individual-info'>
-          <div className='myjobs-individual-applicants'>
-            <p className='myjobs-individual-title'>{userJobs.title}</p>
-            <div className='myjobs-individual-applicants-wrapper'>
-              <strong><Link className="applicants-link" to={`/myjobs/applicants/${userJobs.id}`}>View all applicants</Link></strong>
-              <Link to={`/myjobs/${userJobs.id}/edit`}>
-                <img src={editicon} alt="" />
-              </Link>
-              <button className="myjobs-individual-applicants-icons-button"><img src={deleteicon} alt="" onClick={myFunction} /></button>
+        {userJobs.map(job => (
+          <div className='myjobs-individual-info'>
+            <div className='myjobs-individual-applicants'>
+              <p className='myjobs-individual-title'>{job.title}</p>
+              <div className='myjobs-individual-applicants-wrapper'>
+                <strong><Link className="applicants-link" to={`/myjobs/applicants/${job.id}`}>View all applicants</Link></strong>
+                <Link to={`/myjobs/1/edit`}>
+                  <img src={editicon} alt="" />
+                </Link>
+                <button className="myjobs-individual-applicants-icons-button"><img src={deleteicon} alt="" onClick={myFunction} /></button>
+              </div>
             </div>
+            <p>Date posted: jobs created time</p>
+            <p>Location: jobs location</p>
+            <p>Start date: jobs start date</p>
+            <p>Salary: jobs salary</p>
+            <p className='myjobs-individual-description-title'>Description:</p>
+            <p className='myjobs-individual-description'>desc desc desc</p>
           </div>
-          <p>Date posted: {userJobs.created}</p>
-          <p>Location: {userJobs.location}</p>
-          <p>Start date: {userJobs.start_date}</p>
-          <p>Salary: {userJobs.salary}</p>
-          <p className='myjobs-individual-description-title'>Description:</p>
-          <p className='myjobs-individual-description'>{userJobs.description}</p>
-        </div>
+        ))}
       </div>
     </div>
   );
