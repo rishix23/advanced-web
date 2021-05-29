@@ -17,7 +17,6 @@ function PostJob() {
     fetch('http://localhost:5000/', requestOptions)
       .then(response => response.json())
       .then(data => console.log(data));
-
   }
 
   return (
@@ -29,8 +28,6 @@ function PostJob() {
           {errors.title && <p>{errors.title.message}</p>}
           <input type="text" placeholder="Salary" {...register('salary', { required: "This is required!" })} />
           {errors.salary && <p>{errors.salary.message}</p>}
-          <input type="text" placeholder="Start date" {...register('startDate', { required: "This is required!" })} />
-          {errors.startDate && <p>{errors.startDate.message}</p>}
           <input type="text" placeholder="Location" {...register('location', { required: "This is required!" })} />
           {errors.location && <p>{errors.location.message}</p>}
           <input type="text" placeholder="Your company" {...register('company', { required: "This is required!" })} />
@@ -45,9 +42,9 @@ function PostJob() {
             <option>Environment</option>
             <option>IT</option>
           </select>
-          <textarea type="text" placeholder="Job description, max 250 characters!" {...register('jobdescription', { required: "This is required!", maxLength: { value: 250, message: "Max length 250 characters!" } })}>
+          <textarea type="text" placeholder="Job description, max 250 characters!" {...register('description', { required: "This is required!", maxLength: { value: 250, message: "Max length 250 characters!" } })}>
           </textarea>
-          {errors.jobdescription && <p>{errors.jobdescription.message}</p>}
+          {errors.description && <p>{errors.description.message}</p>}
           <input type="submit" />
         </form>
         <h4 className='postjob-msg'>Your job has been successfully posted!</h4>

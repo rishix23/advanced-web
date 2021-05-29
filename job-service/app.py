@@ -30,6 +30,7 @@ def jobs():
                 employer_id = request.json["employerId"]
                 title = request.json["title"]
                 salary = request.json.get("salary")
+                location = request.json.get("location")
                 start_date = request.json.get("startDate")
                 company = request.json["company"]
                 sector = request.json.get("sector")
@@ -53,16 +54,15 @@ def jobs():
                 "title": title,
                 "salary": salary,
                 "startDate": start_date,
+                "location": location,
                 "company": company,
                 "sector": sector,
                 "description": description,
             }
-
+            
             response = requests.post(DB_URL, job)
 
-            return _corsify_actual_response(
-                jsonify(response.json()), response.status_code
-            )
+            return _corsify_actual_response(jsonify(response.json()), response.status_code)
 
 
 @app.route("/<id>", methods=["GET", "PATCH", "DELETE", "OPTIONS"])
