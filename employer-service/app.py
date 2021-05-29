@@ -1,9 +1,7 @@
 from flask import Flask, request, make_response, jsonify, Response
 from datetime import datetime
-from models import Employer
 import bcrypt
 import requests
-import json
 from uuid import uuid4
 
 DB_URL = "http://localhost:5001/employers"
@@ -23,14 +21,19 @@ def employers():
             password = request.json["password"]
         except:
             return _corsify_actual_response(
-                Response("First Name, Last Name, Email and Password are required", 400)
+                jsonify(
+                    {
+                        "Message": "First Name, Last Name, Email and Password are required"
+                    }
+                ),
+                400,
             )
 
         existing_employer = requests.get(f"{DB_URL}?email={email}").json()
 
         if existing_employer:
             return _corsify_actual_response(
-                Response("User with the supplied email already exists", 400)
+                jsonify({"Message": "User with the supplied email already exists"}), 400
             )
 
         id = str(uuid4())
@@ -50,11 +53,7 @@ def employers():
             return _corsify_actual_response(
                 Response("Something went wrong, please try again later", 500)
             )
-        testresponse = {'userid' : id}
-        return _corsify_actual_response(jsonify(testresponse))
-
-
-# Necessary headers to allow frontend to authenticate api
+        return _corsify_actual_response(jsonify({"id": id}), 201)
 
 
 def _build_cors_prelight_response():
@@ -65,8 +64,9 @@ def _build_cors_prelight_response():
     return response
 
 
-def _corsify_actual_response(response):
+def _corsify_actual_response(response, status_code=200):
     response.headers.add("Access-Control-Allow-Origin", "*")
+    response.status_code = status_code
     return response
 
 
