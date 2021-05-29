@@ -25,7 +25,7 @@ function Signup() {
 	};
 
 	if (authTokens) {
-		return <Redirect to="/myjobs" />;
+		return <Redirect to="/" />;
 	}
 
 	const handleResponse = (dataReceived) => {

@@ -29,7 +29,7 @@ function Login() {
   };
 
   if (authTokens) {
-    return <Redirect to="/myjobs" />;
+    return <Redirect to="/" />;
   }
 
   return (
