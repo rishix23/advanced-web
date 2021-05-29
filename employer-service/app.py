@@ -51,7 +51,8 @@ def employers():
 
         if not response.ok:
             return _corsify_actual_response(
-                Response("Something went wrong, please try again later", 500)
+                jsonify({"Message": "Something went wrong, please try again later"}),
+                500,
             )
         return _corsify_actual_response(jsonify({"id": id}), 201)
 
