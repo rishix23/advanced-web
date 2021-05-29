@@ -34,7 +34,10 @@ def handle_jobs():
         job.employer_id = request.json.get("employerId", "")
         job.title = request.json.get("title", "")
         job.salary = request.json.get("salary", 0)
-        job.start_date = request.json.get("startDate", str(date.today()))
+        request_date = request.json.get("startDate")
+        job.start_date = date(
+            int(request_date[0:4]), int(request_date[5:7]), int(request_date[8:10])
+        )
         job.location = request.json.get("location", "")
         job.company = request.json.get("company", "")
         job.sector = request.json.get("sector", "")
@@ -62,7 +65,10 @@ def handle_job(id):
         job.employer_id = request.json.get("employerId", "")
         job.title = request.json.get("title", "")
         job.salary = request.json.get("salary", 0)
-        job.start_date = request.json.get("startDate", str(date.today()))
+        request_date = request.json.get("startDate", "")
+        job.start_date = date(
+            int(request_date[0:4]), int(request_date[5:7]), int(request_date[8:10])
+        )
         job.location = request.json.get("location", "")
         job.company = request.json.get("company", "")
         job.sector = request.json.get("sector", "")

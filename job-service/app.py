@@ -30,7 +30,7 @@ def jobs():
                 employer_id = request.json["employerId"]
                 title = request.json["title"]
                 salary = request.json.get("salary")
-                start_date = request.json.get("startDate")
+                start_date = request.json.get("startDate", str(date.today()))
                 company = request.json["company"]
                 sector = request.json.get("sector")
                 description = request.json.get("description")
@@ -42,11 +42,7 @@ def jobs():
                     400,
                 )
 
-            # Assuming a date arrives in the format YYYY-MM-DD
-            request_date = request.json.get("startDate", str(date.today()))
-            start_date = date(
-                int(request_date[0:4]), int(request_date[5:7]), int(request_date[8:10])
-            )
+            # Then, should additionally do some validation checking on the start date
             job = {
                 "id": str(uuid4()),
                 "employerId": employer_id,
@@ -58,7 +54,7 @@ def jobs():
                 "description": description,
             }
 
-            response = requests.post(DB_URL, job)
+            response = requests.post(DB_URL, json=job)
 
             return _corsify_actual_response(
                 jsonify(response.json()), response.status_code
