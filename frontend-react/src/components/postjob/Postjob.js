@@ -6,9 +6,10 @@ import './Postjob.css'
 function PostJob() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { authTokens } = useAuth();
+  const [isMsg, setMsg] = useState();
 
   const onSubmit = (formData) => {
-    formData.employerId = JSON.parse(authTokens)
+    formData.employerId = authTokens
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -16,8 +17,16 @@ function PostJob() {
     };
     fetch('http://localhost:5000/', requestOptions)
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => handleResponse(data));
   }
+
+  const handleResponse = (dataReceived) => {
+    if ("id" in dataReceived) {
+      setMsg("Your job has been successfully posted!");
+    } else {
+      setMsg(dataReceived.Message);
+    }
+  };
 
   return (
     <div className='postjob-main-wrapper'>
@@ -47,7 +56,7 @@ function PostJob() {
           {errors.description && <p>{errors.description.message}</p>}
           <input type="submit" />
         </form>
-        <h4 className='postjob-msg'>Your job has been successfully posted!</h4>
+        {isMsg && <h4 className='postjob-msg'>{isMsg}</h4>}
       </div>
     </div>
   );
