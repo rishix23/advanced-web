@@ -9,7 +9,7 @@ function JobsDetail({ match }) {
 	}, []);
 
 	const fetchJob = async () => {
-		const data = await fetch(`http://localhost:5000/${match.params.id}`);
+		const data = await fetch(`http://localhost:5010/${match.params.id}`);
 		const job = await data.json();
 		setJob(job);
 	};
