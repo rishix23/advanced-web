@@ -18,7 +18,6 @@ function Myjobs() {
     const data = await fetch(`http://localhost:5000/?employerId=${authTokens}`);
     const userJobs = await data.json();
     setUserJobs(userJobs);
-    console.log(userJobs);
   }
 
   const deleteJob = (jobId) => {

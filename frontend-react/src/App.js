@@ -24,7 +24,7 @@ function App() {
     if (data == null) {
       localStorage.removeItem("tokens")
     } else {
-      localStorage.setItem("tokens", JSON.stringify(data));
+      localStorage.setItem("tokens", data);
     }
     setAuthTokens(data);
   }
