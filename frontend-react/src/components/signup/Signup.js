@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import './Signup.css';
 import { useAuth } from '../../context/auth';
+import { Redirect } from 'react-router-dom';
 
 function Signup() {
 	const {
@@ -23,6 +24,10 @@ function Signup() {
 			.then(data => handleResponse(data));
 	};
 
+	if (authTokens) {
+		return <Redirect to="/myjobs" />;
+	}
+
 	const handleResponse = (dataReceived) => {
 		if ("id" in dataReceived) {
 			setAuthTokens(dataReceived.id);
@@ -30,6 +35,8 @@ function Signup() {
 			setError(dataReceived.Message);
 		}
 	};
+
+
 
 	return (
 		<div className='signup-main-wrapper'>
