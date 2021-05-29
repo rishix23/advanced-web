@@ -62,3 +62,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.delete-msg{
+  text-align: center;
+  color: goldenrod;
+}
