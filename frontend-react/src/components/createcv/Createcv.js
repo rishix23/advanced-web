@@ -13,8 +13,15 @@ function Createcv() {
       body: JSON.stringify(formData)
     };
     fetch('http://localhost:5000/CVTemplate1', requestOptions)
-      .then(response => response.json())
-      .then(data => setSubmittedCv(data));
+      .then(response => {
+        response.blob().then(blob => {
+          let url = window.URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.href = url;
+          a.download = 'cv.doc';
+          a.click();
+        });
+      });
   }
 
   return (
