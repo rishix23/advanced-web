@@ -4,12 +4,16 @@ import './EditJob.css'
 
 function EditJob({ match }) {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [isJobEdited, setJobEdited] = useState(false);
+  const [isJobEdited, setJobEdited] = useState();
 
-  const onSubmit = (data) => {
-    data.jobId = match.params.id
-    console.log("dsdfsdsfldflfdsllsdldsf000", data);
-    setJobEdited(true);
+  const onSubmit = (formData) => {
+    const requestOptions = {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+    };
+    fetch(`http://localhost:5000/${match.params.id}?title=${formData.title}&salary=${formData.salary}&location=${formData.location}&company=${formData.company}&sector=${formData.sector}&description=${formData.description}`, requestOptions)
+      .then(response => response.json())
+      .then(data => console.log(data));
   }
 
   return (
@@ -17,14 +21,10 @@ function EditJob({ match }) {
       <h3 className='editjob-title'>Edit job</h3>
       <div className='editjob-wrapper'>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <input type="text" placeholder="Job title" {...register('jobtitle', { required: "This is required!" })} />
-          {errors.jobtitle && <p>{errors.jobtitle.message}</p>}
-          <input type="text" placeholder="Salary" {...register('salary', { required: "This is required!" })} />
-          {errors.salary && <p>{errors.salary.message}</p>}
-          <input type="text" placeholder="Location" {...register('location', { required: "This is required!" })} />
-          {errors.location && <p>{errors.location.message}</p>}
-          <input type="text" placeholder="Your company" {...register('company', { required: "This is required!" })} />
-          {errors.company && <p>{errors.company.message}</p>}
+          <input type="text" placeholder="Job title" {...register('title')} />
+          <input type="text" placeholder="Salary" {...register('salary')} />
+          <input type="text" placeholder="Location" {...register('location')} />
+          <input type="text" placeholder="Your company" {...register('company')} />
           <label>Sector</label>
           <select {...register('sector')}>
             <option>Finance</option>
@@ -35,7 +35,7 @@ function EditJob({ match }) {
             <option>Environment</option>
             <option>IT</option>
           </select>
-          <textarea type="text" placeholder="Job description, max 250 characters!" {...register('jobdescription', { required: "This is required!", maxLength: { value: 250, message: "Max length 250 characters!" } })}>
+          <textarea type="text" placeholder="Job description, max 250 characters!" {...register('description', { maxLength: { value: 250, message: "Max length 250 characters!" } })}>
           </textarea>
           {errors.jobdescription && <p>{errors.jobdescription.message}</p>}
           <input type="submit" />
