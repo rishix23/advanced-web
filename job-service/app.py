@@ -7,7 +7,7 @@ from uuid import uuid4
 
 app = Flask(__name__)
 
-DB_URL = "http://localhost:5001/jobs"
+DB_URL = "http://db-service/jobs"
 
 
 @app.route("/", methods=["GET", "POST", "OPTIONS"])
@@ -98,4 +98,4 @@ def _corsify_actual_response(response, status_code=200):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=80)

@@ -15,9 +15,10 @@ from io import BytesIO
 
 app = Flask(__name__)
 
-@app.route("/CVTemplate1", methods=['POST', "OPTIONS"])
+
+@app.route("/CVTemplate1", methods=["POST", "OPTIONS"])
 def createTemplate1():
-     # CORS preflight
+    # CORS preflight
     if request.method == "OPTIONS":
         return _build_cors_prelight_response()
     # The actual request following the preflight
@@ -51,4 +52,4 @@ def _corsify_actual_response(response):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host="0.0.0.0", port=80)

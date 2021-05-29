@@ -2,7 +2,7 @@ from flask import Flask, request, make_response, jsonify
 import requests
 from uuid import uuid4
 
-DB_URL = "http://localhost:5001/applications"
+DB_URL = "http://db-service/applications"
 
 app = Flask(__name__)
 
@@ -59,4 +59,4 @@ def _corsify_actual_response(response):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=80)

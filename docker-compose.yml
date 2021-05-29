@@ -1,0 +1,46 @@
+version: '3.9'
+services:
+    cv-creator-service:
+        build: ./cv-creator-service
+        ports:
+            - '5006:80'
+        volumes:
+            - ./cv-creator-service:/app
+    db-service:
+        build: ./db-service
+        ports:
+            - '5001:80'
+        volumes:
+            - ./db-service:/app
+    application-service:
+        build: ./application-service
+        ports:
+            - '5003:80'
+        volumes:
+            - ./application-service:/app
+        depends_on:
+            - db-service
+    auth-service:
+        build: ./auth-service
+        ports:
+            - '5004:80'
+        volumes:
+            - ./auth-service:/app
+        depends_on:
+            - db-service
+    employer-service:
+        build: ./employer-service
+        ports:
+            - '5005:80'
+        volumes:
+            - ./employer-service:/app
+        depends_on:
+            - db-service
+    job-service:
+        build: ./job-service
+        ports:
+            - '5000:80'
+        volumes:
+            - ./job-service:/app
+        depends_on:
+            - db-service
