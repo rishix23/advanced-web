@@ -48,7 +48,7 @@ function Myjobs() {
             <p>Date posted: {job.created}</p>
             <p>Location: {job.location}</p>
             <p>Start date: {job.start_date}</p>
-            <p>Salary: jobs salary</p>
+            <p>Salary: {job.salary}</p>
             <p className='myjobs-individual-description-title'>Description:</p>
             <p className='myjobs-individual-description'>{job.description}</p>
           </div>
