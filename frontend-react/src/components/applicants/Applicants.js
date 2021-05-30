@@ -18,23 +18,12 @@ function Applicants({ match }) {
   const downloadCv = (applicantid) => {
     const requestOptions = {
       method: 'POST',
-      responseType: 'blob'
+      headers: { 'Content-Type': 'application/json' },
     };
     fetch(`http://localhost:5003/${applicantid}`, requestOptions)
-      .then(response => {
-        //Create a Blob from the PDF Stream
-        console.log(response.data)
-        const file = new Blob(
-          [response.data],
-          { type: 'application/pdf' });
-        //Build a URL from the file
-        const fileURL = URL.createObjectURL(file);
-        //Open the URL on new Window
-        window.open(fileURL);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+      .then(response => response.json())
+      .then(data => console.log(data));
+
   };
 
   const [applicants, setApplicants] = useState([]);
@@ -55,7 +44,7 @@ function Applicants({ match }) {
           </thead>
           <tbody>
             {applicants.map((applicant, index) =>
-              <tr key={applicant.job_id}>
+              <tr key={applicant.id}>
                 <td>{index + 1}</td>
                 <td>{applicant.full_name}</td>
                 <td>{applicant.email}</td>
