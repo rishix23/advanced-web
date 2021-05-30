@@ -32,7 +32,7 @@ def index():
             return _corsify_actual_response(
                 jsonify(
                     {
-                        "message": "JobID, Fullname, Phone, Email and Resume are required"
+                        "Message": "JobID, Fullname, Phone, Email and Resume are required"
                     },
                     400,
                 )
