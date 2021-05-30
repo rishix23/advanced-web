@@ -27,7 +27,6 @@ function Applicants({ match }) {
             let url = URL.createObjectURL(blob);
             //Open the URL on new Window
             window.open(url);
-            console.log(response.headers)
           });
         }
       );
