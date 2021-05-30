@@ -12,7 +12,7 @@ function Createcv() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
     };
-    fetch('http://localhost:5000/CVTemplate1', requestOptions)
+    fetch('http://localhost:5006/CVTemplate1', requestOptions)
       .then(response => {
         response.blob().then(blob => {
           let url = window.URL.createObjectURL(blob);
