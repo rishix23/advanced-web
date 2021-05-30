@@ -6,21 +6,35 @@ import './Postjob.css'
 function PostJob() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { authTokens } = useAuth();
-  const [isJobPosted, setJobPosted] = useState(false);
+  const [isMsg, setMsg] = useState();
 
-  const onSubmit = (data) => {
-    const dataWithUser = { ...authTokens, ...data };
-    console.log(dataWithUser);
-    setJobPosted(true);
+  const onSubmit = (formData) => {
+    formData.employerId = authTokens
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    };
+    fetch('http://localhost:5000/', requestOptions)
+      .then(response => response.json())
+      .then(data => handleResponse(data));
   }
+
+  const handleResponse = (dataReceived) => {
+    if ("id" in dataReceived) {
+      setMsg("Your job has been successfully posted!");
+    } else {
+      setMsg(dataReceived.Message);
+    }
+  };
 
   return (
     <div className='postjob-main-wrapper'>
       <h3 className='postjob-title'>Post a job</h3>
       <div className='postjob-wrapper'>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <input type="text" placeholder="Job title" {...register('jobtitle', { required: "This is required!" })} />
-          {errors.jobtitle && <p>{errors.jobtitle.message}</p>}
+          <input type="text" placeholder="Job title" {...register('title', { required: "This is required!" })} />
+          {errors.title && <p>{errors.title.message}</p>}
           <input type="text" placeholder="Salary" {...register('salary', { required: "This is required!" })} />
           {errors.salary && <p>{errors.salary.message}</p>}
           <input type="text" placeholder="Location" {...register('location', { required: "This is required!" })} />
@@ -37,12 +51,12 @@ function PostJob() {
             <option>Environment</option>
             <option>IT</option>
           </select>
-          <textarea type="text" placeholder="Job description, max 250 characters!" {...register('jobdescription', { required: "This is required!", maxLength: { value: 250, message: "Max length 250 characters!" } })}>
+          <textarea type="text" placeholder="Job description, max 250 characters!" {...register('description', { required: "This is required!", maxLength: { value: 250, message: "Max length 250 characters!" } })}>
           </textarea>
-          {errors.jobdescription && <p>{errors.jobdescription.message}</p>}
+          {errors.description && <p>{errors.description.message}</p>}
           <input type="submit" />
         </form>
-        {isJobPosted && <h4 className='postjob-msg'>Your job has been successfully posted!</h4>}
+        {isMsg && <h4 className='postjob-msg'>{isMsg}</h4>}
       </div>
     </div>
   );

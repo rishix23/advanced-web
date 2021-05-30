@@ -15,41 +15,44 @@ function Myjobs() {
   const { authTokens } = useAuth();
 
   const fetchUserJobs = async () => {
-    console.log("dfsfsdfdsdfs", authTokens)
-    const data = await fetch(`http://localhost:5001/jobs/${authTokens}`);
+    const data = await fetch(`http://localhost:5000/?employerId=${authTokens}`);
     const userJobs = await data.json();
-    setUserJobs(userJobs)
+    setUserJobs(userJobs);
   }
 
-  const myFunction = () => {
-    console.log("you clicked me")
+  const deleteJob = (jobId) => {
+    fetch(`http://localhost:5000/${jobId}`, { method: 'DELETE' })
+      .then(() => setDeleteSuccess(true));
   }
 
-  //remember to change to array
-  const [userJobs, setUserJobs] = useState({});
+  const [userJobs, setUserJobs] = useState([]);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
 
   return (
     <div className='myjobs-wrapper-main'>
-      <h1 className='myjobs-title'>1 Active job(s)</h1>
+      <h1 className='myjobs-title'>{userJobs.length} Active job(s)</h1>
+      {deleteSuccess && <h4 className='delete-msg'>Job successfully deleted!</h4>}
       <div className='myjobs-wrapper'>
-        <div className='myjobs-individual-info'>
-          <div className='myjobs-individual-applicants'>
-            <p className='myjobs-individual-title'>{userJobs.title}</p>
-            <div className='myjobs-individual-applicants-wrapper'>
-              <strong><Link className="applicants-link" to={`/myjobs/applicants/${userJobs.id}`}>View all applicants</Link></strong>
-              <Link to={`/myjobs/${userJobs.id}/edit`}>
-                <img src={editicon} alt="" />
-              </Link>
-              <button className="myjobs-individual-applicants-icons-button"><img src={deleteicon} alt="" onClick={myFunction} /></button>
+        {userJobs.map(job => (
+          <div key={job.id} className='myjobs-individual-info'>
+            <div className='myjobs-individual-applicants'>
+              <p className='myjobs-individual-title'>{job.title}</p>
+              <div className='myjobs-individual-applicants-wrapper'>
+                <strong><Link className="applicants-link" to={`/myjobs/applicants/${job.id}`}>View all applicants</Link></strong>
+                <Link to={`/myjobs/${job.id}/edit`}>
+                  <img src={editicon} alt="" />
+                </Link>
+                <button className="myjobs-individual-applicants-icons-button" onClick={() => deleteJob(job.id)}><img src={deleteicon} alt="" /></button>
+              </div>
             </div>
+            <p>Date posted: {job.created}</p>
+            <p>Location: {job.location}</p>
+            <p>Start date: {job.start_date}</p>
+            <p>Salary: jobs salary</p>
+            <p className='myjobs-individual-description-title'>Description:</p>
+            <p className='myjobs-individual-description'>{job.description}</p>
           </div>
-          <p>Date posted: {userJobs.created}</p>
-          <p>Location: {userJobs.location}</p>
-          <p>Start date: {userJobs.start_date}</p>
-          <p>Salary: {userJobs.salary}</p>
-          <p className='myjobs-individual-description-title'>Description:</p>
-          <p className='myjobs-individual-description'>{userJobs.description}</p>
-        </div>
+        ))}
       </div>
     </div>
   );

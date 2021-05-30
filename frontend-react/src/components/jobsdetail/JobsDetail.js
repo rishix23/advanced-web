@@ -15,6 +15,7 @@ function JobsDetail({ match }) {
 	};
 
 	const [job, setJob] = useState({});
+	const [isMsg, setMsg] = useState();
 
 	const {
 		register,
@@ -32,12 +33,20 @@ function JobsDetail({ match }) {
 
 		const requestOptions = {
 			method: 'POST',
-			body: formData,
+			body: formData
 		};
-		fetch('http://localhost:5003', requestOptions).then(response =>
-			response.json()
-		);
-		//   .then(data => setSubmittedCv(data));
+		fetch('http://localhost:5003/', requestOptions)
+			.then(response => response.json())
+			.then(data => handleResponse(data));
+
+	};
+
+	const handleResponse = (dataReceived) => {
+		if ("id" in dataReceived) {
+			setMsg("Your application has been successfully submitted!");
+		} else {
+			setMsg(dataReceived.Message);
+		}
 	};
 
 	return (
@@ -95,6 +104,7 @@ function JobsDetail({ match }) {
 					<button className='detail-job-apply-btn'>Apply</button>
 				</form>
 			</div>
+			{isMsg && <h4 className='postapplication-msg'>{isMsg}</h4>}
 		</div>
 	);
 }

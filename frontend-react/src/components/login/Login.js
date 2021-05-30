@@ -6,16 +6,29 @@ import { useAuth } from '../../context/auth';
 
 function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const { setAuthTokens } = useAuth();
+  const { authTokens, setAuthTokens } = useAuth();
+  const [isError, setError] = useState();
 
-  const onSubmit = (data) => {
-    console.log(data)
-    setAuthTokens(1);
-    setLoggedIn(true);
-  }
+  const onSubmit = (formData) => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    };
+    fetch('http://localhost:5004/', requestOptions)
+      .then(response => response.json())
+      .then(data => handleResponse(data));
+  };
 
-  if (isLoggedIn) {
+  const handleResponse = (dataReceived) => {
+    if ("id" in dataReceived) {
+      setAuthTokens(dataReceived.id);
+    } else {
+      setError(dataReceived.Message);
+    }
+  };
+
+  if (authTokens) {
     return <Redirect to="/" />;
   }
 
@@ -31,6 +44,7 @@ function Login() {
           <input type="submit" />
           <Link to="/signup">Don't have an account?</Link>
         </form>
+        {isError && <h4 className='error-msg'>{isError}</h4>}
       </div>
     </div>
   );

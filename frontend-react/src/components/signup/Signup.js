@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import './Signup.css';
 import { useAuth } from '../../context/auth';
+import { Redirect } from 'react-router-dom';
 
 function Signup() {
 	const {
@@ -10,6 +11,7 @@ function Signup() {
 		formState: { errors },
 	} = useForm();
 	const { authTokens, setAuthTokens } = useAuth();
+	const [isError, setError] = useState();
 
 	const onSubmit = formData => {
 		const requestOptions = {
@@ -19,8 +21,22 @@ function Signup() {
 		};
 		fetch('http://localhost:5005/', requestOptions)
 			.then(response => response.json())
-			.then(data => setAuthTokens(data.id));
+			.then(data => handleResponse(data));
 	};
+
+	if (authTokens) {
+		return <Redirect to="/" />;
+	}
+
+	const handleResponse = (dataReceived) => {
+		if ("id" in dataReceived) {
+			setAuthTokens(dataReceived.id);
+		} else {
+			setError(dataReceived.Message);
+		}
+	};
+
+
 
 	return (
 		<div className='signup-main-wrapper'>
@@ -34,7 +50,7 @@ function Signup() {
 							required: 'This is required!',
 						})}
 					/>
-					{errors.firstname && <p>{errors.firstname.message}</p>}
+					{errors.firstName && <p>{errors.firstName.message}</p>}
 					<input
 						type='text'
 						placeholder='Last name'
@@ -42,7 +58,7 @@ function Signup() {
 							required: 'This is required!',
 						})}
 					/>
-					{errors.lastname && <p>{errors.lastname.message}</p>}
+					{errors.lastName && <p>{errors.lastName.message}</p>}
 					<input
 						type='text'
 						placeholder='Email'
@@ -65,9 +81,8 @@ function Signup() {
 					{errors.password && <p>{errors.password.message}</p>}
 					<input type='submit' />
 				</form>
-				<h4 className='signup-msg'>
-					{authTokens && 'Signup Success!'}
-				</h4>
+				{authTokens && <h4 className='signup-msg'>Signup Success!</h4>}
+				{isError && <h4 className='error-msg'>{isError}</h4>}
 			</div>
 		</div>
 	);
