@@ -18,9 +18,19 @@ function Applicants({ match }) {
   const downloadCv = (applicantid) => {
     const requestOptions = {
       method: 'POST',
+      responseType: 'blob'
     };
     fetch(`http://localhost:5003/${applicantid}`, requestOptions)
-      .then(response => console.log(response))
+      .then(
+        response => {
+          response.blob().then(blob => {
+            let url = URL.createObjectURL(blob);
+            //Open the URL on new Window
+            window.open(url);
+            console.log(response.headers)
+          });
+        }
+      );
 
   };
 

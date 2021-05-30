@@ -181,7 +181,7 @@ def handle_application(id):
         application = db.session.query(Application).get({"id": id})
         return send_file(
             BytesIO(application.resume),
-            attachment_filename=f"{application.full_name} resume.docx",
+            attachment_filename=f"{application.full_name} resume.pdf",
             as_attachment=True,
         )
 

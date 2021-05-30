@@ -31,6 +31,7 @@ function Myjobs() {
   return (
     <div className='myjobs-wrapper-main'>
       <h1 className='myjobs-title'>{userJobs.length} Active job(s)</h1>
+      {deleteSuccess && <h4 className='delete-msg'>Job successfully deleted!</h4>}
       <div className='myjobs-wrapper'>
         {userJobs.map(job => (
           <div key={job.id} className='myjobs-individual-info'>
@@ -50,7 +51,6 @@ function Myjobs() {
             <p>Salary: jobs salary</p>
             <p className='myjobs-individual-description-title'>Description:</p>
             <p className='myjobs-individual-description'>{job.description}</p>
-            {deleteSuccess && <h4 className='delete-msg'>Job successfully deleted!</h4>}
           </div>
         ))}
       </div>
