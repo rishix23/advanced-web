@@ -12,7 +12,6 @@ function Applicants({ match }) {
     const data = await fetch(`http://localhost:5003/?jobId=${match.params.id}`);
     const applicants = await data.json();
     setApplicants(applicants);
-    console.log(applicants)
   };
 
   const downloadCv = (applicantid) => {
