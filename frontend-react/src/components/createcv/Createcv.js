@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import './Createcv.css';
 
 function Createcv() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [isSubmittedCv, setSubmittedCv] = useState();
 
   const onSubmit = (formData) => {
     const requestOptions = {
@@ -131,7 +130,6 @@ function Createcv() {
           </div>
           <input type="submit" />
         </form>
-        {isSubmittedCv && console.log(isSubmittedCv)}
       </div>
     </div>
   );
