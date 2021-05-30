@@ -32,12 +32,12 @@ function JobsDetail({ match }) {
 
 		const requestOptions = {
 			method: 'POST',
-			body: formData,
+			body: formData
 		};
-		fetch('http://localhost:5003', requestOptions).then(response =>
-			response.json()
-		);
-		//   .then(data => setSubmittedCv(data));
+		fetch('http://localhost:5003/', requestOptions)
+			.then(response => response.json())
+			.then(data => console.log(data));
+
 	};
 
 	return (

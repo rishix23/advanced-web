@@ -1,34 +1,70 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Applicants.css';
 
 function Applicants({ match }) {
+
+  useEffect(() => {
+    fetchApplicants();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchApplicants = async () => {
+    const data = await fetch(`http://localhost:5003/?jobId=${match.params.id}`);
+    const applicants = await data.json();
+    setApplicants(applicants);
+    console.log(applicants)
+  };
+
+  const downloadCv = (applicantid) => {
+    const requestOptions = {
+      method: 'POST',
+      responseType: 'blob'
+    };
+    fetch(`http://localhost:5003/${applicantid}`, requestOptions)
+      .then(response => {
+        //Create a Blob from the PDF Stream
+        console.log(response.data)
+        const file = new Blob(
+          [response.data],
+          { type: 'application/pdf' });
+        //Build a URL from the file
+        const fileURL = URL.createObjectURL(file);
+        //Open the URL on new Window
+        window.open(fileURL);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const [applicants, setApplicants] = useState([]);
+
   return (
     <div className='applicants-wrapper-main'>
-      {console.log("4867bnd", match.params.id)}
       <h1 className='applicants-title'>Applicants</h1>
       <div className='grid-wrapper'>
-        <div className='grid'>
-          <span>
-            <strong>Applicant Id</strong>
-          </span>
-          <span>
-            <strong>FullName</strong>
-          </span>
-          <span>
-            <strong>Phone</strong>
-          </span>
-          <span>
-            <strong>Email</strong>
-          </span>
-          <span>
-            <strong>CV</strong>
-          </span>
-          <span>1</span>
-          <span>Bill Bryson</span>
-          <span>07922429723</span>
-          <span>bbryson@gmail.com</span>
-          <span>Download</span>
-        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Applicant</th>
+              <th>Full name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>CV</th>
+            </tr>
+          </thead>
+          <tbody>
+            {applicants.map((applicant, index) =>
+              <tr key={applicant.job_id}>
+                <td>{index + 1}</td>
+                <td>{applicant.full_name}</td>
+                <td>{applicant.email}</td>
+                <td>{applicant.phone}</td>
+                <td><button onClick={() => downloadCv(applicant.id)}>Download</button></td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );

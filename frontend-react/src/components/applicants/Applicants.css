@@ -13,15 +13,17 @@
   margin: 30px 150px;
 }
 
-.grid{
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  border-top: 2px solid rgb(231, 230, 230);
-  border-right: 2px solid rgb(231, 230, 230);
+table, td, th {
+  border: 1px solid black;
 }
 
-.grid > span {
-  padding: 8px 4px;
-  border-left: 2px solid rgb(231, 230, 230);
-  border-bottom: 2px solid rgb(231, 230, 230);
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
+
+td, th{
+  padding: 5px;
+  text-align: center;
+}
+
