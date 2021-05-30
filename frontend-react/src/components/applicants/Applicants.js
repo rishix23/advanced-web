@@ -18,11 +18,9 @@ function Applicants({ match }) {
   const downloadCv = (applicantid) => {
     const requestOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
     };
     fetch(`http://localhost:5003/${applicantid}`, requestOptions)
-      .then(response => response.json())
-      .then(data => console.log(data));
+      .then(response => console.log(response))
 
   };
 
