@@ -2,12 +2,12 @@ from flask import Flask, request, make_response, jsonify
 import requests
 import bcrypt
 
-DB_URL = "http://db-service/employers"
+DB_URL = "http://db-2005248843.eu-west-2.elb.amazonaws.com/employers"
 
 app = Flask(__name__)
 
 
-@app.route("/", methods=["POST", "OPTIONS"])
+@app.route("/api/auth", methods=["POST", "OPTIONS"])
 def employers():
     if request.method == "OPTIONS":  # CORS preflight
         return _build_cors_prelight_response()

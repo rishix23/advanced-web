@@ -16,7 +16,7 @@ from io import BytesIO
 app = Flask(__name__)
 
 
-@app.route("/CVTemplate1", methods=["POST", "OPTIONS"])
+@app.route("/api/cv/CVTemplate1", methods=["POST", "OPTIONS"])
 def createTemplate1():
     # CORS preflight
     if request.method == "OPTIONS":
