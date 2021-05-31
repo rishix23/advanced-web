@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import './Signup.css';
 import { useAuth } from '../../context/auth';
 import { Redirect } from 'react-router-dom';
+import { EMPLOYER_URL } from '../../constants';
 
 function Signup() {
 	const {
@@ -19,24 +20,22 @@ function Signup() {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(formData),
 		};
-		fetch('http://localhost:5005/', requestOptions)
+		fetch(EMPLOYER_URL, requestOptions)
 			.then(response => response.json())
 			.then(data => handleResponse(data));
 	};
 
 	if (authTokens) {
-		return <Redirect to="/" />;
+		return <Redirect to='/' />;
 	}
 
-	const handleResponse = (dataReceived) => {
-		if ("id" in dataReceived) {
+	const handleResponse = dataReceived => {
+		if ('id' in dataReceived) {
 			setAuthTokens(dataReceived.id);
 		} else {
 			setError(dataReceived.Message);
 		}
 	};
-
-
 
 	return (
 		<div className='signup-main-wrapper'>

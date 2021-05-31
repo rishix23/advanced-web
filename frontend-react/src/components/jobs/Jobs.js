@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Jobs.css';
 import { Link } from 'react-router-dom';
+import { JOB_URL } from '../../constants';
 
 function Jobs() {
 	useEffect(() => {
@@ -8,7 +9,7 @@ function Jobs() {
 	}, []);
 
 	const fetchJobs = async () => {
-		const data = await fetch('http://localhost:5000/');
+		const data = await fetch(`${JOB_URL}`);
 		const jobs = await data.json();
 		setJobs(jobs);
 	};
