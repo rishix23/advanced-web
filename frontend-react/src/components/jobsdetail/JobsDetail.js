@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './JobsDetail.css';
 import { useForm } from 'react-hook-form';
-import { APPLICATION_URL, JOB_URL } from '../../constants';
 
 function JobsDetail({ match }) {
 	useEffect(() => {
@@ -10,7 +9,7 @@ function JobsDetail({ match }) {
 	}, []);
 
 	const fetchJob = async () => {
-		const data = await fetch(`${JOB_URL}/${match.params.id}`);
+		const data = await fetch(`http://localhost:5000/${match.params.id}`);
 		const job = await data.json();
 		setJob(job);
 	};
@@ -34,16 +33,17 @@ function JobsDetail({ match }) {
 
 		const requestOptions = {
 			method: 'POST',
-			body: formData,
+			body: formData
 		};
-		fetch(APPLICATION_URL, requestOptions)
+		fetch('http://localhost:5003/', requestOptions)
 			.then(response => response.json())
 			.then(data => handleResponse(data));
+
 	};
 
-	const handleResponse = dataReceived => {
-		if ('id' in dataReceived) {
-			setMsg('Your application has been successfully submitted!');
+	const handleResponse = (dataReceived) => {
+		if ("id" in dataReceived) {
+			setMsg("Your application has been successfully submitted!");
 		} else {
 			setMsg(dataReceived.Message);
 		}
