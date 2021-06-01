@@ -3,12 +3,12 @@ from flask import Flask, request, make_response, send_file, jsonify
 import requests
 from uuid import uuid4
 
-DB_URL = "http://db-2005248843.eu-west-2.elb.amazonaws.com/applications"
+DB_URL = "http://db-service/applications"
 
 app = Flask(__name__)
 
 
-@app.route("/api/applications", methods=["GET", "POST", "OPTIONS"])
+@app.route("/", methods=["GET", "POST", "OPTIONS"])
 def index():
     # CORS preflight
     if request.method == "OPTIONS":
@@ -56,7 +56,7 @@ def index():
         return _corsify_actual_response(jsonify(response.json()), response.status_code)
 
 
-@app.route("/api/applications/<id>", methods=["POST", "OPTIONS"])
+@app.route("/<id>", methods=["POST", "OPTIONS"])
 def download(id):
     if request.method == "OPTIONS":
         return _build_cors_prelight_response()

@@ -7,10 +7,10 @@ from uuid import uuid4
 
 app = Flask(__name__)
 
-DB_URL = "http://db-2005248843.eu-west-2.elb.amazonaws.com/jobs"
+DB_URL = "http://db-service/jobs"
 
 
-@app.route("/api/jobs", methods=["GET", "POST", "OPTIONS"])
+@app.route("/", methods=["GET", "POST", "OPTIONS"])
 def jobs():
     if request.method == "OPTIONS":  # CORS preflight
         return _build_cors_prelight_response()
@@ -63,7 +63,7 @@ def jobs():
             )
 
 
-@app.route("/api/jobs/<id>", methods=["GET", "PATCH", "DELETE", "OPTIONS"])
+@app.route("/<id>", methods=["GET", "PATCH", "DELETE", "OPTIONS"])
 def job(id):
     if request.method == "OPTIONS":  # CORS preflight
         return _build_cors_prelight_response()
